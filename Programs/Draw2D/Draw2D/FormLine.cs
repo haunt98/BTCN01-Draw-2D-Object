@@ -147,7 +147,7 @@ namespace Draw2D
             pictureBox_draw.Refresh();
         }
 
-        private void button_helpLine_click(object sender, EventArgs e)
+        private void button_help_click(object sender, EventArgs e)
         {
             MessageBox.Show("x1, y1 is cordinate of Point p1" + Environment.NewLine +
                 "x2, y2 is cordinate of Point p2" + Environment.NewLine +
@@ -165,7 +165,7 @@ namespace Draw2D
                 "Help");
         }
 
-        private void button_randomLine_Click(object sender, EventArgs e)
+        private void button_rand_click(object sender, EventArgs e)
         {
             if (!get_numRand())
             {

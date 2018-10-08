@@ -158,7 +158,7 @@
             // 
             this.pictureBox_draw.Location = new System.Drawing.Point(12, 73);
             this.pictureBox_draw.Name = "pictureBox_draw";
-            this.pictureBox_draw.Size = new System.Drawing.Size(692, 261);
+            this.pictureBox_draw.Size = new System.Drawing.Size(697, 261);
             this.pictureBox_draw.TabIndex = 12;
             this.pictureBox_draw.TabStop = false;
             // 
@@ -170,7 +170,7 @@
             this.button_helpLine.TabIndex = 13;
             this.button_helpLine.Text = "Help";
             this.button_helpLine.UseVisualStyleBackColor = true;
-            this.button_helpLine.Click += new System.EventHandler(this.button_helpLine_click);
+            this.button_helpLine.Click += new System.EventHandler(this.button_help_click);
             // 
             // label6
             // 
@@ -198,7 +198,7 @@
             this.button_randomLine.TabIndex = 16;
             this.button_randomLine.Text = "Random";
             this.button_randomLine.UseVisualStyleBackColor = true;
-            this.button_randomLine.Click += new System.EventHandler(this.button_randomLine_Click);
+            this.button_randomLine.Click += new System.EventHandler(this.button_rand_click);
             // 
             // textBox_randLineNum
             // 
@@ -221,7 +221,7 @@
             this.textBox_randLineTime.Enabled = false;
             this.textBox_randLineTime.Location = new System.Drawing.Point(634, 38);
             this.textBox_randLineTime.Name = "textBox_randLineTime";
-            this.textBox_randLineTime.Size = new System.Drawing.Size(82, 20);
+            this.textBox_randLineTime.Size = new System.Drawing.Size(75, 20);
             this.textBox_randLineTime.TabIndex = 19;
             // 
             // label9
@@ -233,7 +233,7 @@
             this.label9.TabIndex = 20;
             this.label9.Text = "Time running random";
             // 
-            // Form1
+            // FormLine
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -259,7 +259,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox_x1);
             this.Controls.Add(this.label1);
-            this.Name = "Form1";
+            this.Name = "FormLine";
             this.Text = "Draw Line 2D";
             this.Load += new System.EventHandler(this.FormLine_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_draw)).EndInit();

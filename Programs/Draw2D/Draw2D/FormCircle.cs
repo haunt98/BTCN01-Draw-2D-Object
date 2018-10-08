@@ -215,5 +215,15 @@ namespace Draw2D
 
             return true;
         }
+
+        private void button_help_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("x, y is cordinate of center point of circle" + Environment.NewLine +
+                "R is radius of circle" + Environment.NewLine +
+                "x, y, R, x - R, y - R must be positive integer" + Environment.NewLine +
+                "x, x + R must be less or equal than " + bitmap.Width + Environment.NewLine +
+                "y, y + R must be less or equal than " + bitmap.Height + Environment.NewLine,
+                "Help");
+        }
     }
 }

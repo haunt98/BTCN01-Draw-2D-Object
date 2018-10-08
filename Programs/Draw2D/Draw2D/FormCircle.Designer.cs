@@ -192,7 +192,7 @@
             this.textBox_timeRand.Enabled = false;
             this.textBox_timeRand.Location = new System.Drawing.Point(442, 38);
             this.textBox_timeRand.Name = "textBox_timeRand";
-            this.textBox_timeRand.Size = new System.Drawing.Size(57, 20);
+            this.textBox_timeRand.Size = new System.Drawing.Size(74, 20);
             this.textBox_timeRand.TabIndex = 16;
             // 
             // button_help
@@ -203,6 +203,7 @@
             this.button_help.TabIndex = 17;
             this.button_help.Text = "Help";
             this.button_help.UseVisualStyleBackColor = true;
+            this.button_help.Click += new System.EventHandler(this.button_help_Click);
             // 
             // FormCircle
             // 
