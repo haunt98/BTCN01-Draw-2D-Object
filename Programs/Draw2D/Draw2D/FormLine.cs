@@ -187,7 +187,7 @@ namespace Draw2D
             DrawLine2D drawLine2D = new DrawLine2D(bitmap);
             if (comboBox_lineAlgo.Text.Equals("DDA"))
             {
-                stopwatch = Stopwatch.StartNew();
+                stopwatch.Restart();
                 for (int i = 0; i < numRand; ++i)
                 {
                     drawLine2D.DDA(line2DS[i], Color.Blue);
@@ -196,7 +196,7 @@ namespace Draw2D
             }
             else if (comboBox_lineAlgo.Text.Equals("Bresenham"))
             {
-                stopwatch = Stopwatch.StartNew();
+                stopwatch.Restart();
                 for (int i = 0; i < numRand; ++i)
                 {
                     drawLine2D.Bresenham(line2DS[i], Color.Blue);
@@ -205,7 +205,7 @@ namespace Draw2D
             }
             else if (comboBox_lineAlgo.Text.Equals("MidPoint"))
             {
-                stopwatch = Stopwatch.StartNew();
+                stopwatch.Restart();
                 for (int i = 0; i < numRand; ++i)
                 {
                     drawLine2D.MidPoint(line2DS[i], Color.Blue);
@@ -216,7 +216,7 @@ namespace Draw2D
             {
             }
 
-            // Set excution time to text box
+            // set running time to text box
             textBox_randLineTime.Text = stopwatch.ElapsedMilliseconds.ToString() + " ms";
 
             // refresh picture box every draw

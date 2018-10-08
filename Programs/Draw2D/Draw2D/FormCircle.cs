@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
@@ -38,6 +39,8 @@ namespace Draw2D
 
         private Circle2D circle2D;
         private Bitmap bitmap;
+        private Random random = new Random();
+        private int numRand;
 
         private Boolean get_circle2D()
         {
@@ -131,6 +134,86 @@ namespace Draw2D
         private void button_clear_Click(object sender, EventArgs e)
         {
             clearAllDrawing();
+        }
+
+        private void button_rand_Click(object sender, EventArgs e)
+        {
+            if (!get_randNum())
+            {
+                return;
+            }
+
+            // clear all drawings before random
+            clearAllDrawing();
+
+            // get a random list of circle
+            List<Circle2D> circle2DS = randListCircle2D(numRand);
+
+            // StopWatch object for calculating execution time of the algorithm
+            // StartNew and Stop for make sure stopwatch is not redundant object
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            stopwatch.Stop();
+
+            // DrawCircle2D object
+            DrawCircle2D drawCircle2D = new DrawCircle2D(bitmap);
+            if (comboBox_algo.Text.Equals("8-way symmetry"))
+            {
+                stopwatch.Restart();
+                for (int i = 0; i < numRand; ++i)
+                {
+                    drawCircle2D.EightSymmetry(circle2DS[i], Color.Blue);
+                }
+                stopwatch.Stop();
+            }
+
+            // set running time to text box
+            textBox_timeRand.Text = stopwatch.ElapsedMilliseconds.ToString() + " ms";
+
+            // refresh picture box every draw
+            pictureBox_draw.Refresh();
+        }
+
+        private List<Circle2D> randListCircle2D(int numRand)
+        {
+            List<Circle2D> circle2DS = new List<Circle2D>();
+
+            for (int i = 0; i < numRand; ++i)
+            {
+                int x = random.Next(bitmap.Width);
+                int y = random.Next(bitmap.Height);
+                int min_xy = x < y ? x : y;
+                int min_wh = bitmap.Width - x < bitmap.Height - y
+                    ? bitmap.Width - x : bitmap.Height - y;
+                int min = min_xy < min_wh ? min_xy : min_wh;
+                int R = random.Next(min);
+                circle2DS.Add(new Circle2D(new Point(x, y), R));
+            }
+
+            return circle2DS;
+        }
+
+        private Boolean get_randNum()
+        {
+            if (string.IsNullOrWhiteSpace(textBox_numRand.Text))
+            {
+                MessageBox.Show("Number of circles to random is missing",
+                    "Error");
+                return false;
+            }
+            if (!int.TryParse(textBox_numRand.Text, out numRand))
+            {
+                MessageBox.Show("Number of circles to random is in wrong format",
+                    "Error");
+                return false;
+            }
+            if (numRand < 0)
+            {
+                MessageBox.Show("Number of circles to random must be positive integer",
+                    "Error");
+                return false;
+            }
+
+            return true;
         }
     }
 }
