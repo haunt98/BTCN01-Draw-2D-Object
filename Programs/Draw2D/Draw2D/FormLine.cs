@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,9 +14,10 @@ namespace Draw2D
 {
     public partial class FormLine : Form
     {
-        private Point p1, p2;
+        private Line2D line2D;
         private Bitmap bitmap;
-        private Random RandomNumber = new Random();
+        private Random random = new Random();
+        private int numRand;
 
         public FormLine()
         {
@@ -34,15 +36,15 @@ namespace Draw2D
             DrawLine2D drawLine2D = new DrawLine2D(bitmap);
             if (comboBox_lineAlgo.Text.Equals("DDA"))
             {
-                drawLine2D.DDA(p1, p2, Color.Blue);
+                drawLine2D.DDA(line2D, Color.Blue);
             }
             else if (comboBox_lineAlgo.Text.Equals("Bresenham"))
             {
-                drawLine2D.Bresenham(p1, p2, Color.Blue);
+                drawLine2D.Bresenham(line2D, Color.Blue);
             }
             else if (comboBox_lineAlgo.Text.Equals("MidPoint"))
             {
-                drawLine2D.MidPoint(p1, p2, Color.Blue);
+                drawLine2D.MidPoint(line2D, Color.Blue);
             }
             else if (comboBox_lineAlgo.Text.Equals("Xiaolin Wu"))
             {
@@ -72,22 +74,21 @@ namespace Draw2D
             {
                 MessageBox.Show("Wrong format!" + Environment.NewLine +
                     "x1, y1, x2, y2 must be positive integer" + Environment.NewLine +
-                    "x1, x2 must be less or equal than " + pictureBox_draw.Width.ToString() + Environment.NewLine +
-                    "y1, y2 must be less or qual than " + pictureBox_draw.Height.ToString() + Environment.NewLine,
+                    "x1, x2 must be less or equal than " + bitmap.Width.ToString() + Environment.NewLine +
+                    "y1, y2 must be less or qual than " + bitmap.Height.ToString() + Environment.NewLine,
                     "Error");
                 return false;
             }
+            line2D = new Line2D(new Point(x1, y1),
+                new Point(x2, y2));
 
-            p1 = new Point(x1, y1);
-            p2 = new Point(x2, y2);
-
-            if (!isPointInsidePictureBox(p1) ||
-                !isPointInsidePictureBox(p2))
+            if (!isPointInsidePictureBox(line2D.p1) ||
+                !isPointInsidePictureBox(line2D.p2))
             {
                 MessageBox.Show("x1, y1, x2, y2 is too big" + Environment.NewLine +
                     "x1, y1, x2, y2 must be positive integer" + Environment.NewLine +
-                    "x1, x2 must be less or equal than " + pictureBox_draw.Width.ToString() + Environment.NewLine +
-                    "y1, y2 must be less or qual than " + pictureBox_draw.Height.ToString() + Environment.NewLine,
+                    "x1, x2 must be less or equal than " + bitmap.Width.ToString() + Environment.NewLine +
+                    "y1, y2 must be less or qual than " + bitmap.Height.ToString() + Environment.NewLine,
                     "Error");
                 return false;
             }
@@ -98,7 +99,7 @@ namespace Draw2D
         private Boolean isPointInsidePictureBox(Point p)
         {
             if (p.X < 0 || p.Y < 0 ||
-                p.X > pictureBox_draw.Width || p.Y > pictureBox_draw.Height)
+                p.X > bitmap.Width || p.Y > bitmap.Height)
                 return false;
             return true;
         }
@@ -111,9 +112,9 @@ namespace Draw2D
         private void FormLine_Load(object sender, EventArgs e)
         {
             // use bitmap for drawing
-            bitmap = new Bitmap(this.ClientRectangle.Width,
-            this.ClientRectangle.Height,
-            System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+            bitmap = new Bitmap(pictureBox_draw.Width,
+            pictureBox_draw.Height,
+            PixelFormat.Format24bppRgb);
 
             // set bitmap to picture box
             pictureBox_draw.Image = bitmap;
@@ -151,8 +152,8 @@ namespace Draw2D
             MessageBox.Show("x1, y1 is cordinate of Point p1" + Environment.NewLine +
                 "x2, y2 is cordinate of Point p2" + Environment.NewLine +
                 "x1, y1, x2, y2 must be positive integer" + Environment.NewLine +
-                "x1, x2 must be less or equal than " + pictureBox_draw.Width.ToString() + Environment.NewLine +
-                "y1, y2 must be less or qual than " + pictureBox_draw.Height.ToString() + Environment.NewLine +
+                "x1, x2 must be less or equal than " + bitmap.Width.ToString() + Environment.NewLine +
+                "y1, y2 must be less or qual than " + bitmap.Height.ToString() + Environment.NewLine +
                 Environment.NewLine +
                 "You choose an algorithm (DDA, Bresenham, MidPoint, Xiaolin Wu)," + Environment.NewLine +
                 "then press \"Draw line\" button to draw a line from p1 to p2" + Environment.NewLine +
@@ -166,26 +167,16 @@ namespace Draw2D
 
         private void button_randomLine_Click(object sender, EventArgs e)
         {
-            int num;
-            if (string.IsNullOrWhiteSpace(textBox_randLineNum.Text))
+            if (!get_numRand())
             {
-                MessageBox.Show("Number of lines to random is missing",
-                    "Error");
-                return;
-            }
-            else if (!int.TryParse(textBox_randLineNum.Text, out num))
-            {
-                MessageBox.Show("Number of lines to random is in wrong format",
-                    "Error");
                 return;
             }
 
             // clear all drawings before random
             clearAllDrawing();
 
-            // get a random list of point
-            List<Point> points_1 = randListPoints(num);
-            List<Point> points_2 = randListPoints(num);
+            // get a random list of line
+            List<Line2D> line2DS = randListLine2D(numRand);
 
             // StopWatch object for calculating execution time of the algorithm
             // StartNew and Stop for make sure stopwatch is not redundant object
@@ -197,27 +188,27 @@ namespace Draw2D
             if (comboBox_lineAlgo.Text.Equals("DDA"))
             {
                 stopwatch = Stopwatch.StartNew();
-                for (int i = 0; i < num; ++i)
+                for (int i = 0; i < numRand; ++i)
                 {
-                    drawLine2D.DDA(points_1[i], points_2[i], Color.Blue);
+                    drawLine2D.DDA(line2DS[i], Color.Blue);
                 }
                 stopwatch.Stop();
             }
             else if (comboBox_lineAlgo.Text.Equals("Bresenham"))
             {
                 stopwatch = Stopwatch.StartNew();
-                for (int i = 0; i < num; ++i)
+                for (int i = 0; i < numRand; ++i)
                 {
-                    drawLine2D.Bresenham(points_1[i], points_2[i], Color.Blue);
+                    drawLine2D.Bresenham(line2DS[i], Color.Blue);
                 }
                 stopwatch.Stop();
             }
             else if (comboBox_lineAlgo.Text.Equals("MidPoint"))
             {
                 stopwatch = Stopwatch.StartNew();
-                for (int i = 0; i < num; ++i)
+                for (int i = 0; i < numRand; ++i)
                 {
-                    drawLine2D.MidPoint(points_1[i], points_2[i], Color.Blue);
+                    drawLine2D.MidPoint(line2DS[i], Color.Blue);
                 }
                 stopwatch.Stop();
             }
@@ -232,15 +223,41 @@ namespace Draw2D
             pictureBox_draw.Refresh();
         }
 
-        private List<Point> randListPoints(int num)
+        private Boolean get_numRand()
         {
-            List<Point> points = new List<Point>();
+            if (string.IsNullOrWhiteSpace(textBox_randLineNum.Text))
+            {
+                MessageBox.Show("Number of lines to random is missing",
+                    "Error");
+                return false;
+            }
+            if (!int.TryParse(textBox_randLineNum.Text, out numRand))
+            {
+                MessageBox.Show("Number of lines to random is in wrong format",
+                    "Error");
+                return false;
+            }
+            if (numRand < 0)
+            {
+                MessageBox.Show("Number of lines to random must be positive integer",
+                    "Error");
+                return false;
+            }
+
+            return true;
+        }
+
+        private List<Line2D> randListLine2D(int num)
+        {
+            List<Line2D> line2DS = new List<Line2D>();
             for (int i = 0; i < num; ++i)
             {
-                points.Add(new Point(RandomNumber.Next(pictureBox_draw.Width),
-                    RandomNumber.Next(pictureBox_draw.Height)));
+                line2DS.Add(new Line2D(new Point(random.Next(bitmap.Width),
+                    random.Next(bitmap.Height)),
+                    new Point(random.Next(bitmap.Width),
+                    random.Next(bitmap.Height))));
             }
-            return points;
+            return line2DS;
         }
     }
 }

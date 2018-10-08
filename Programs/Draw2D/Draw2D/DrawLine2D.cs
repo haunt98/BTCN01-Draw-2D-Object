@@ -8,6 +8,24 @@ using System.IO;
 
 namespace Draw2D
 {
+    public class Line2D
+    {
+        public Point p1 { get; set; }
+        public Point p2 { get; set; }
+
+        public Line2D(Point pp1, Point pp2)
+        {
+            p1 = new Point(pp1.X, pp1.Y);
+            p2 = new Point(pp2.X, pp2.Y);
+        }
+
+        // if p1 and p2 is the same
+        public Boolean isPoint()
+        {
+            return p1.Equals(p2);
+        }
+    }
+
     public class DrawLine2D
     {
         private Bitmap bitmap;
@@ -19,9 +37,12 @@ namespace Draw2D
 
         // Use the idea from the code in following links
         // https://www.tutorialspoint.com/computer_graphics/line_generation_algorithm.htm
-        public void DDA(Point p1, Point p2, Color color)
+        public void DDA(Line2D line2D, Color color)
         {
-            if (p1.Equals(p2))
+            Point p1 = line2D.p1;
+            Point p2 = line2D.p2;
+
+            if (line2D.isPoint())
             {
                 bitmap.SetPixel(p1.X, p1.Y, color);
                 return;
@@ -51,9 +72,12 @@ namespace Draw2D
 
         // Use the idea from the code in following links
         // https://csustan.csustan.edu/~tom/Lecture-Notes/Graphics/Bresenham-Line/Bresenham-Line.pdf
-        public void Bresenham(Point p1, Point p2, Color color)
+        public void Bresenham(Line2D line2D, Color color)
         {
-            if (p1.Equals(p2))
+            Point p1 = line2D.p1;
+            Point p2 = line2D.p2;
+
+            if (line2D.isPoint())
             {
                 bitmap.SetPixel(p1.X, p1.Y, color);
                 return;
@@ -129,11 +153,15 @@ namespace Draw2D
 
         // Use the idea from the code in following links
         // https://www.geeksforgeeks.org/mid-point-line-generation-algorithm/
-        public void MidPoint(Point p1, Point p2, Color color)
+        public void MidPoint(Line2D line2D, Color color)
         {
-            if (p1.Equals(p2))
+            Point p1 = line2D.p1;
+            Point p2 = line2D.p2;
+
+            if (line2D.isPoint())
             {
                 bitmap.SetPixel(p1.X, p1.Y, color);
+                return;
             }
 
             int Dx = p2.X - p1.X;
@@ -215,8 +243,11 @@ namespace Draw2D
         // https://en.wikipedia.org/wiki/Xiaolin_Wu%27s_line_algorithm
         // https://www.geeksforgeeks.org/anti-aliased-line-xiaolin-wus-algorithm/
         // TODO find a way to setPixel with float color
-        public void XiaolinWu(Point p1, Point p2)
+        public void XiaolinWu(Line2D line2D)
         {
+            Point p1 = line2D.p1;
+            Point p2 = line2D.p2;
+
             Boolean isDyLargeThanDx = Math.Abs(p2.Y - p1.Y) > Math.Abs(p2.X - p1.X);
 
             // make a copy for changing x, y cordinate
