@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace Draw2D
 
         private void button_draw_Click(object sender, EventArgs e)
         {
-            if (!get_pR())
+            if (!get_circle2D())
             {
                 return;
             }
@@ -28,20 +29,19 @@ namespace Draw2D
             DrawCircle2D drawCircle2D = new DrawCircle2D(bitmap);
             if (comboBox_algo.Text.Equals("8-way symmetry"))
             {
-                drawCircle2D.EightSymmetry(pCenter, R, Color.Blue);
+                drawCircle2D.EightSymmetry(circle2D, Color.Blue);
             }
 
             // refresh picture box every draw
             pictureBox_draw.Refresh();
         }
 
-        private Point pCenter = new Point();
-        private int R;
+        private Circle2D circle2D;
         private Bitmap bitmap;
 
-        private Boolean get_pR()
+        private Boolean get_circle2D()
         {
-            int x, y;
+            int x, y, R;
             if (string.IsNullOrWhiteSpace(textBox_x.Text) ||
                 string.IsNullOrWhiteSpace(textBox_y.Text) ||
                 string.IsNullOrWhiteSpace(textBox_R.Text))
@@ -56,19 +56,19 @@ namespace Draw2D
             {
                 MessageBox.Show("Wrong format" + Environment.NewLine +
                     "x, y, R, x - R, y - R must be positive integer" + Environment.NewLine +
-                    "x, x + R must be less or equal than " + pictureBox_draw.Width + Environment.NewLine +
-                    "y, y + R must be less or equal than " + pictureBox_draw.Height + Environment.NewLine,
+                    "x, x + R must be less or equal than " + bitmap.Width + Environment.NewLine +
+                    "y, y + R must be less or equal than " + bitmap.Height + Environment.NewLine,
                     "Error");
                 return false;
             }
-            pCenter.X = x;
-            pCenter.Y = y;
+            circle2D = new Circle2D(new Point(x, y), R);
+
             if (!insidePictureBox())
             {
                 MessageBox.Show("x, y, R value is not suitable" + Environment.NewLine +
                     "x, y, R, x - R, y - R must be positive integer" + Environment.NewLine +
-                    "x, x + R must be less or equal than " + pictureBox_draw.Width + Environment.NewLine +
-                    "y, y + R must be less or equal than " + pictureBox_draw.Height + Environment.NewLine,
+                    "x, x + R must be less or equal than " + bitmap.Width + Environment.NewLine +
+                    "y, y + R must be less or equal than " + bitmap.Height + Environment.NewLine,
                     "Error");
                 return false;
             }
@@ -78,12 +78,15 @@ namespace Draw2D
 
         private Boolean insidePictureBox()
         {
-            if (pCenter.X < 0 || pCenter.Y < 0 || R < 0 ||
-                pCenter.X - R < 0 || pCenter.Y - R < 0 ||
-                pCenter.X > pictureBox_draw.Width ||
-                pCenter.X + R > pictureBox_draw.Width ||
-                pCenter.Y > pictureBox_draw.Height ||
-                pCenter.Y + R > pictureBox_draw.Height)
+            Point center = circle2D.center;
+            int R = circle2D.R;
+
+            if (center.X < 0 || center.Y < 0 || R < 0 ||
+                center.X - R < 0 || center.Y - R < 0 ||
+                center.X > bitmap.Width ||
+                center.X + R > bitmap.Width ||
+                center.Y > bitmap.Height ||
+                center.Y + R > bitmap.Height)
             {
                 return false;
             }
@@ -93,9 +96,9 @@ namespace Draw2D
         private void FormCircle_Load(object sender, EventArgs e)
         {
             // use bitmap for drawing
-            bitmap = new Bitmap(this.ClientRectangle.Width,
-            this.ClientRectangle.Height,
-            System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+            bitmap = new Bitmap(pictureBox_draw.Width,
+            pictureBox_draw.Height,
+            PixelFormat.Format24bppRgb);
 
             // set bitmap to picture box
             pictureBox_draw.Image = bitmap;

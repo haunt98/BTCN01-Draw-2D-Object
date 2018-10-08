@@ -7,6 +7,18 @@ using System.Threading.Tasks;
 
 namespace Draw2D
 {
+    public class Circle2D
+    {
+        public Point center { get; set; }
+        public int R { get; set; }
+
+        public Circle2D(Point c, int r)
+        {
+            center = new Point(c.X, c.Y);
+            R = r;
+        }
+    }
+
     public class DrawCircle2D
     {
         private Bitmap bitmap;
@@ -17,26 +29,29 @@ namespace Draw2D
         }
 
         // Use the idea from slide
-        public void EightSymmetry(Point pCenter, int R, Color color)
+        public void EightSymmetry(Circle2D circle2D, Color color)
         {
-            bitmap.SetPixel(pCenter.X, pCenter.Y + R, color);
-            bitmap.SetPixel(pCenter.X, pCenter.Y - R, color);
-            bitmap.SetPixel(pCenter.X + R, pCenter.Y, color);
-            bitmap.SetPixel(pCenter.X - R, pCenter.Y, color);
+            Point center = circle2D.center;
+            int R = circle2D.R;
+
+            bitmap.SetPixel(center.X, center.Y + R, color);
+            bitmap.SetPixel(center.X, center.Y - R, color);
+            bitmap.SetPixel(center.X + R, center.Y, color);
+            bitmap.SetPixel(center.X - R, center.Y, color);
             int x = 1;
-            int y = (int)Math.Round(Math.Sqrt(R * R - x * x), MidpointRounding.AwayFromZero);
+            int y = (int)Math.Round(Math.Sqrt(R * R - x * x));
             while (x < y)
             {
-                bitmap.SetPixel(pCenter.X + x, pCenter.Y + y, color);
-                bitmap.SetPixel(pCenter.X + x, pCenter.Y - y, color);
-                bitmap.SetPixel(pCenter.X - x, pCenter.Y + y, color);
-                bitmap.SetPixel(pCenter.X - x, pCenter.Y - y, color);
-                bitmap.SetPixel(pCenter.X + y, pCenter.Y + x, color);
-                bitmap.SetPixel(pCenter.X + y, pCenter.Y - x, color);
-                bitmap.SetPixel(pCenter.X - y, pCenter.Y + x, color);
-                bitmap.SetPixel(pCenter.X - y, pCenter.Y - x, color);
+                bitmap.SetPixel(center.X + x, center.Y + y, color);
+                bitmap.SetPixel(center.X + x, center.Y - y, color);
+                bitmap.SetPixel(center.X - x, center.Y + y, color);
+                bitmap.SetPixel(center.X - x, center.Y - y, color);
+                bitmap.SetPixel(center.X + y, center.Y + x, color);
+                bitmap.SetPixel(center.X + y, center.Y - x, color);
+                bitmap.SetPixel(center.X - y, center.Y + x, color);
+                bitmap.SetPixel(center.X - y, center.Y - x, color);
                 ++x;
-                y = (int)Math.Round(Math.Sqrt(R * R - x * x), MidpointRounding.AwayFromZero);
+                y = (int)Math.Round(Math.Sqrt(R * R - x * x));
             }
         }
     }

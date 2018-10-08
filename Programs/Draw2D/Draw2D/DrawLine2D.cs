@@ -62,8 +62,8 @@ namespace Draw2D
 
             for (int i = 0; i < steps; ++i)
             {
-                x_round = (int)Math.Round(x_precise, MidpointRounding.AwayFromZero);
-                y_round = (int)Math.Round(y_precise, MidpointRounding.AwayFromZero);
+                x_round = (int)Math.Round(x_precise);
+                y_round = (int)Math.Round(y_precise);
                 bitmap.SetPixel(x_round, y_round, color);
                 x_precise += x_increment;
                 y_precise += y_increment;
