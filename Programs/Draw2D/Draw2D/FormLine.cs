@@ -127,10 +127,10 @@ namespace Draw2D
 
         private void setComboBoxLineDrawing()
         {
-            comboBox_lineAlgo.Items.Insert(0, "DDA");
-            comboBox_lineAlgo.Items.Insert(1, "Bresenham");
-            comboBox_lineAlgo.Items.Insert(2, "MidPoint");
-            comboBox_lineAlgo.Items.Insert(3, "Xiaolin Wu");
+            comboBox_lineAlgo.Items.Add("DDA");
+            comboBox_lineAlgo.Items.Add("Bresenham");
+            comboBox_lineAlgo.Items.Add("MidPoint");
+            comboBox_lineAlgo.Items.Add("Xiaolin Wu");
             comboBox_lineAlgo.SelectedIndex = 0;
         }
 

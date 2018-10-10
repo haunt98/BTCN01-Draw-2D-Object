@@ -87,6 +87,8 @@ namespace Draw2D
             int Dy = p2.Y - p1.Y;
             int x_increment, y_increment, x_draw, y_draw;
 
+            // if Dy, Dx is negative -> change step in each increment to -1
+            // if slope > 1 or < -1, swap Dx with Dy, x with y
             if (Dy < 0)
             {
                 Dy = -Dy;
@@ -107,52 +109,84 @@ namespace Draw2D
                 x_increment = 1;
             }
 
-            // mulitply Dy, Dx by 2
-            Dy <<= 1;
-            Dx <<= 1;
+            // Explain Bresenham algorithm
+            // From Point(x_i, y_i) next to Point(x_(i+1), y)
+            // Need to know y near y_i or y_i + 1
+            // d1 = y - y_i
+            // d2 = (y_i + 1) - y
+            // if d1 - d2 < 0, y = y_i
+            // otherwise y = y_i + 1
+            //
+            // d1 - d2 = 2y - 2y_i - 1
+            // as know Point(x_(i+1), y) on the line,
+            // so y = (Dy/Dx) * x_(i+1) + b with b = y_0 - (Dy/Dx) * x0 and x_(i+1) = x_i + 1
+            // d1 - d2 = 2(Dy/Dx) * x_i - 2y_i + (2b - 1 + 2(Dy/Dx))
+            //
+            // p_i = Dx * (d1 - d2)
+            // d1 - d2 < 0 <=> p_i < 0 (Use p_i to avoid divide to Dx)
+            // p_i = 2Dy * x_i - 2Dx * y_i + (2b * Dx - Dx + 2Dy)
+            //
+            // p_(i+1) - p_i = 2Dy - 2Dx * (y_(i+1) - y_i)
+            //
+            // with p_i < 0
+            //      y_(i+1) = y_i
+            //      p_(i+1) = p_i + 2Dy
+            // with p_i >= 0
+            //      y_(i+1) = y_i + 1
+            //      p_(i+1) = p_i + 2Dy - 2Dx
+            //
+            // p_0 = 2Dy * x_0 - 2Dx * y_0 + (2b * Dx - Dx + 2Dy)
+            // with b = y_0 - (Dy/Dx) * x0
+            // p_0 = 2Dy - Dx
 
             // value of x, y actually draw
             x_draw = p1.X;
             y_draw = p1.Y;
             bitmap.SetPixel(x_draw, y_draw, color);
 
-            // for checking if y_draw need to be y or y + 1
+            // error_step is p_i
             int error_step;
 
             if (Dx > Dy)
             {
-                error_step = Dy - (Dx >> 1);
+                // init error_step with p_0
+                error_step = 2 * Dy - Dx;
                 while (x_draw != p2.X)
                 {
                     x_draw += x_increment;
-                    if (error_step >= 0)
+                    if (error_step < 0)
+                    {
+                        error_step += 2 * Dy;
+                    }
+                    else
                     {
                         y_draw += y_increment;
-                        error_step -= Dx;
+                        error_step += 2 * Dy - 2 * Dx;
                     }
-                    error_step += Dy;
                     bitmap.SetPixel(x_draw, y_draw, color);
                 }
             }
             else
             {
-                error_step = Dx - (Dy >> 1);
+                error_step = 2 * Dx - Dy;
                 while (y_draw != p2.Y)
                 {
-                    if (error_step >= 0)
+                    if (error_step < 0)
+                    {
+                        error_step += 2 * Dx;
+                    }
+                    else
                     {
                         x_draw += x_increment;
-                        error_step -= Dy;
+                        error_step += 2 * Dx - 2 * Dy;
                     }
                     y_draw += y_increment;
-                    error_step += Dx;
                     bitmap.SetPixel(x_draw, y_draw, color);
                 }
             }
         }
 
-        // Use the idea from the code in following links
-        // https://www.geeksforgeeks.org/mid-point-line-generation-algorithm/
+        // Bresenham and MidPoint draw line is actually the same
         public void MidPoint(Line2D line2D, Color color)
         {
             Point p1 = line2D.p1;
@@ -168,6 +202,8 @@ namespace Draw2D
             int Dy = p2.Y - p1.Y;
             int x_increment, y_increment, x_draw, y_draw;
 
+            // if Dy, Dx is negative -> change step in each increment to -1
+            // if slope > 1 or < -1, swap Dx with Dy, x with y
             if (Dy < 0)
             {
                 Dy = -Dy;
@@ -188,52 +224,65 @@ namespace Draw2D
                 x_increment = 1;
             }
 
+            // Explain MidPoint algorithm
+            // in Bresenham algorithm, use d1 - d2 to determine y_(i+1)
+            // in MidPoint, use y_i + 1/2
+            //
+            // F(x, y) = Ax + By + C, A > 0
+            // F(x, y) < 0 above the line
+            //         > 0 below the line
+            //
+            // mid point is Point(x_(i+1), y_i + 1/2)
+            // p_i = 2F(x_(i+1), y_i + 1/2)
+            // p_i < 0, line in half below mid point
+            // p_i > 0, line in half above mid point
+            //
+            // p_(i+1) = p_i = 2Dy - 2Dx * (y_(i+1) - y_i)
+            // p_0 = 2Dy - Dx
+            // same as Bresenham
+
             // value of x, y actually draw
             x_draw = p1.X;
             y_draw = p1.Y;
             bitmap.SetPixel(x_draw, y_draw, color);
 
-            int decision;
+            // error_step is p_i
+            int error_step;
 
             if (Dx > Dy)
             {
-                decision = Dy - (Dx >> 1);
+                // init error_step with p_0
+                error_step = 2 * Dy - Dx;
                 while (x_draw != p2.X)
                 {
                     x_draw += x_increment;
-
-                    // Eest
-                    if (decision < 0)
+                    if (error_step < 0)
                     {
-                        decision += Dy;
+                        error_step += 2 * Dy;
                     }
-                    // North
                     else
                     {
-                        decision += Dy - Dx;
                         y_draw += y_increment;
+                        error_step += 2 * Dy - 2 * Dx;
                     }
-
                     bitmap.SetPixel(x_draw, y_draw, color);
                 }
             }
             else
             {
-                decision = Dx - (Dy >> 1);
+                error_step = 2 * Dx - Dy;
                 while (y_draw != p2.Y)
                 {
-                    if (decision < 0)
+                    if (error_step < 0)
                     {
-                        decision += Dx;
+                        error_step += 2 * Dx;
                     }
                     else
                     {
-                        decision += Dx - Dy;
                         x_draw += x_increment;
+                        error_step += 2 * Dx - 2 * Dy;
                     }
-
                     y_draw += y_increment;
-
                     bitmap.SetPixel(x_draw, y_draw, color);
                 }
             }

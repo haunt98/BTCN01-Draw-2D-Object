@@ -28,9 +28,17 @@ namespace Draw2D
 
             // DrawCircle 2D object
             DrawCircle2D drawCircle2D = new DrawCircle2D(bitmap);
-            if (comboBox_algo.Text.Equals("8-way symmetry"))
+            if (comboBox_algo.Text.Equals("DDA"))
             {
-                drawCircle2D.EightSymmetry(circle2D, Color.Blue);
+                drawCircle2D.DDA(circle2D, Color.Blue);
+            }
+            else if (comboBox_algo.Text.Equals("Bresenham"))
+            {
+                drawCircle2D.Bresenham(circle2D, Color.Blue);
+            }
+            else if (comboBox_algo.Text.Equals("MidPoint"))
+            {
+                drawCircle2D.MidPoint(circle2D, Color.Blue);
             }
 
             // refresh picture box every draw
@@ -41,6 +49,7 @@ namespace Draw2D
         private Bitmap bitmap;
         private Random random = new Random();
         private int numRand;
+        private List<Circle2D> circle2DS = new List<Circle2D>();
 
         private Boolean get_circle2D()
         {
@@ -114,7 +123,9 @@ namespace Draw2D
 
         private void setComboBoxCircleDrawing()
         {
-            comboBox_algo.Items.Insert(0, "8-way symmetry");
+            comboBox_algo.Items.Add("DDA");
+            comboBox_algo.Items.Add("Bresenham");
+            comboBox_algo.Items.Add("MidPoint");
             comboBox_algo.SelectedIndex = 0;
         }
 
@@ -147,7 +158,7 @@ namespace Draw2D
             clearAllDrawing();
 
             // get a random list of circle
-            List<Circle2D> circle2DS = randListCircle2D(numRand);
+            randListCircle2D(numRand);
 
             // StopWatch object for calculating execution time of the algorithm
             // StartNew and Stop for make sure stopwatch is not redundant object
@@ -156,12 +167,30 @@ namespace Draw2D
 
             // DrawCircle2D object
             DrawCircle2D drawCircle2D = new DrawCircle2D(bitmap);
-            if (comboBox_algo.Text.Equals("8-way symmetry"))
+            if (comboBox_algo.Text.Equals("DDA"))
             {
                 stopwatch.Restart();
                 for (int i = 0; i < numRand; ++i)
                 {
-                    drawCircle2D.EightSymmetry(circle2DS[i], Color.Blue);
+                    drawCircle2D.DDA(circle2DS[i], Color.Blue);
+                }
+                stopwatch.Stop();
+            }
+            else if (comboBox_algo.Text.Equals("Bresenham"))
+            {
+                stopwatch.Restart();
+                for (int i = 0; i < numRand; ++i)
+                {
+                    drawCircle2D.Bresenham(circle2DS[i], Color.Blue);
+                }
+                stopwatch.Stop();
+            }
+            else if (comboBox_algo.Text.Equals("MidPoint"))
+            {
+                stopwatch.Restart();
+                for (int i = 0; i < numRand; ++i)
+                {
+                    drawCircle2D.MidPoint(circle2DS[i], Color.Blue);
                 }
                 stopwatch.Stop();
             }
@@ -173,9 +202,9 @@ namespace Draw2D
             pictureBox_draw.Refresh();
         }
 
-        private List<Circle2D> randListCircle2D(int numRand)
+        private void randListCircle2D(int numRand)
         {
-            List<Circle2D> circle2DS = new List<Circle2D>();
+            circle2DS.Clear();
 
             for (int i = 0; i < numRand; ++i)
             {
@@ -188,8 +217,6 @@ namespace Draw2D
                 int R = random.Next(min);
                 circle2DS.Add(new Circle2D(new Point(x, y), R));
             }
-
-            return circle2DS;
         }
 
         private Boolean get_randNum()
