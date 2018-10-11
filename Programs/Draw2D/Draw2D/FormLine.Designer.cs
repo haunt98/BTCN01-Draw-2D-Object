@@ -133,7 +133,7 @@
             this.button_clearAllLine.Name = "button_clearAllLine";
             this.button_clearAllLine.Size = new System.Drawing.Size(75, 23);
             this.button_clearAllLine.TabIndex = 9;
-            this.button_clearAllLine.Text = "Clear all";
+            this.button_clearAllLine.Text = "Clear All";
             this.button_clearAllLine.UseVisualStyleBackColor = true;
             this.button_clearAllLine.Click += new System.EventHandler(this.button_clearAll_Click);
             // 
@@ -146,12 +146,12 @@
             this.label5.TabIndex = 10;
             this.label5.Text = "Choose algorithm";
             // 
-            // comboBox_lineAlgo
+            // comboBox_algo
             // 
             this.comboBox_algo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_algo.FormattingEnabled = true;
             this.comboBox_algo.Location = new System.Drawing.Point(318, 6);
-            this.comboBox_algo.Name = "comboBox_lineAlgo";
+            this.comboBox_algo.Name = "comboBox_algo";
             this.comboBox_algo.Size = new System.Drawing.Size(121, 21);
             this.comboBox_algo.TabIndex = 11;
             // 
@@ -272,7 +272,7 @@
             this.Controls.Add(this.textBox_x1);
             this.Controls.Add(this.label1);
             this.Name = "FormLine";
-            this.Text = "Draw Line 2D";
+            this.Text = "Draw Line";
             this.Load += new System.EventHandler(this.FormLine_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_draw)).EndInit();
             this.ResumeLayout(false);

@@ -181,6 +181,7 @@
             this.button_help.TabIndex = 14;
             this.button_help.Text = "Help";
             this.button_help.UseVisualStyleBackColor = true;
+            this.button_help.Click += new System.EventHandler(this.button_help_Click);
             // 
             // button_randGen
             // 
@@ -207,9 +208,9 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(500, 43);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(139, 13);
+            this.label8.Size = new System.Drawing.Size(143, 13);
             this.label8.TabIndex = 17;
-            this.label8.Text = "Number of Ellipse to random";
+            this.label8.Text = "Number of ellipses to random";
             // 
             // pictureBox_draw
             // 
@@ -271,7 +272,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "FormEllipse";
-            this.Text = "Draw Ellipse 2D";
+            this.Text = "Draw Ellipse";
             this.Load += new System.EventHandler(this.FormEllipse_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_draw)).EndInit();
             this.ResumeLayout(false);

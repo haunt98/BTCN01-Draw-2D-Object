@@ -49,6 +49,7 @@
     <Compile Include="DrawCircle.cs" />
     <Compile Include="DrawEllipse.cs" />
     <Compile Include="DrawLine.cs" />
+    <Compile Include="DrawParabol.cs" />
     <Compile Include="FormCircle.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -60,6 +61,12 @@
     </Compile>
     <Compile Include="FormEllipse.Designer.cs">
       <DependentUpon>FormEllipse.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormHyperbol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormHyperbol.Designer.cs">
+      <DependentUpon>FormHyperbol.cs</DependentUpon>
     </Compile>
     <Compile Include="FormLine.cs">
       <SubType>Form</SubType>
@@ -73,6 +80,12 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormParabol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormParabol.Designer.cs">
+      <DependentUpon>FormParabol.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormCircle.resx">
@@ -81,11 +94,17 @@
     <EmbeddedResource Include="FormEllipse.resx">
       <DependentUpon>FormEllipse.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormHyperbol.resx">
+      <DependentUpon>FormHyperbol.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormLine.resx">
       <DependentUpon>FormLine.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormParabol.resx">
+      <DependentUpon>FormParabol.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -255,5 +255,25 @@ namespace Draw2D
 
             return true;
         }
+
+        private void button_help_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("x, y is cordinate of center point of ellipse" + Environment.NewLine +
+                "a, b is radius of ellipse" + Environment.NewLine +
+                "x, y, a, b, x - a, y - b must be positive integer" + Environment.NewLine +
+                "x, x + a must be less or equal than " + bitmap.Width + Environment.NewLine +
+                "y, y + b must be less or equal than " + bitmap.Height + Environment.NewLine +
+                Environment.NewLine +
+                "You choose an algorithm (DDA, Bresenham, MidPoint)," + Environment.NewLine +
+                "then press \"Draw Ellipse\" button to draw an ellipse frrom point center and radius" + Environment.NewLine +
+                "You can clear all drawings when you press \"Clear All\" button" + Environment.NewLine +
+                Environment.NewLine +
+                "If you want to draw random ellipse, input the number of ellipses you want to draw, then press \"Draw Random\"" + Environment.NewLine +
+                "First time press \"Draw Random\", the program automatically random generate a random list ellipse" + Environment.NewLine +
+                "Next time you press it, the program will use already-have random list ellipse to draw" + Environment.NewLine +
+                "To have new random list ellipse, press \"Random Generate\"" + Environment.NewLine +
+                "After drawing, the program will output the time it took to draw",
+                "Help");
+        }
     }
 }

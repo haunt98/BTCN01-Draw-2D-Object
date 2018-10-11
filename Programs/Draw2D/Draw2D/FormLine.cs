@@ -157,8 +157,8 @@ namespace Draw2D
                 "y1, y2 must be less or qual than " + bitmap.Height.ToString() + Environment.NewLine +
                 Environment.NewLine +
                 "You choose an algorithm (DDA, Bresenham, MidPoint, Xiaolin Wu)," + Environment.NewLine +
-                "then press \"Draw line\" button to draw a line from p1 to p2" + Environment.NewLine +
-                "You can clear all drawings when you press \"Clear all\" button" + Environment.NewLine +
+                "then press \"Draw Line\" button to draw a line from p1 to p2" + Environment.NewLine +
+                "You can clear all drawings when you press \"Clear All\" button" + Environment.NewLine +
                 Environment.NewLine +
                 "If you want to draw random line, input the number of lines you want to draw, then press \"Draw Button\"" + Environment.NewLine +
                 "First time press \"Draw Random\", the program automatically random generate a random list line" + Environment.NewLine +

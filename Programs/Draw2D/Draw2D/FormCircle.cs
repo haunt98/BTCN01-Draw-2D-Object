@@ -255,7 +255,11 @@ namespace Draw2D
                 "x, x + R must be less or equal than " + bitmap.Width + Environment.NewLine +
                 "y, y + R must be less or equal than " + bitmap.Height + Environment.NewLine +
                 Environment.NewLine +
-                "If you want to draw random circle, input the number of circles you want to draw, then press \"Draw Button\"" + Environment.NewLine +
+                "You choose an algorithm (DDA, Bresenham, MidPoint)," + Environment.NewLine +
+                "then press \"Draw Circle\" button to draw a circle frrom point center and radius" + Environment.NewLine +
+                "You can clear all drawings when you press \"Clear All\" button" + Environment.NewLine +
+                Environment.NewLine +
+                "If you want to draw random circle, input the number of circles you want to draw, then press \"Draw Random\"" + Environment.NewLine +
                 "First time press \"Draw Random\", the program automatically random generate a random list circle" + Environment.NewLine +
                 "Next time you press it, the program will use already-have random list circle to draw" + Environment.NewLine +
                 "To have new random list circle, press \"Random Generate\"" + Environment.NewLine +

@@ -41,5 +41,17 @@ namespace Draw2D
             FormEllipse formEllipse = new FormEllipse();
             formEllipse.Show();
         }
+
+        private void button_openParabolDraw_Click(object sender, EventArgs e)
+        {
+            FormParabol formParabol = new FormParabol();
+            formParabol.Show();
+        }
+
+        private void button_openHyperbolDraw_Click(object sender, EventArgs e)
+        {
+            FormHyperbol formHyperbol = new FormHyperbol();
+            formHyperbol.Show();
+        }
     }
 }

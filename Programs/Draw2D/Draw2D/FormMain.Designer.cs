@@ -74,6 +74,7 @@
             this.button_openParabolDraw.TabIndex = 3;
             this.button_openParabolDraw.Text = "Parabol Draw";
             this.button_openParabolDraw.UseVisualStyleBackColor = true;
+            this.button_openParabolDraw.Click += new System.EventHandler(this.button_openParabolDraw_Click);
             // 
             // button_openHyperbolDraw
             // 
@@ -83,6 +84,7 @@
             this.button_openHyperbolDraw.TabIndex = 4;
             this.button_openHyperbolDraw.Text = "Hyperbol Draw";
             this.button_openHyperbolDraw.UseVisualStyleBackColor = true;
+            this.button_openHyperbolDraw.Click += new System.EventHandler(this.button_openHyperbolDraw_Click);
             // 
             // button_helpMain
             // 

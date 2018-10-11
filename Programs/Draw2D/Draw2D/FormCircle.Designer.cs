@@ -241,7 +241,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "FormCircle";
-            this.Text = "Draw Circle 2D";
+            this.Text = "Draw Circle";
             this.Load += new System.EventHandler(this.FormCircle_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_draw)).EndInit();
             this.ResumeLayout(false);
