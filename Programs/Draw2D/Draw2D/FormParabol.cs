@@ -251,7 +251,7 @@ namespace Draw2D
             {
                 int x = random.Next(bitmap.Width);
                 int y = random.Next(bitmap.Height);
-                int a = random.Next(100);
+                int a = random.Next(1, 100);
                 int b = random.Next(1, 100);
                 parabolS.Add(new Parabol(new Point(x, y), a, b));
             }
