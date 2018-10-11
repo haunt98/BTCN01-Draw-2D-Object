@@ -46,13 +46,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DrawCircle2D.cs" />
-    <Compile Include="DrawLine2D.cs" />
+    <Compile Include="DrawCircle.cs" />
+    <Compile Include="DrawEllipse.cs" />
+    <Compile Include="DrawLine.cs" />
     <Compile Include="FormCircle.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormCircle.Designer.cs">
       <DependentUpon>FormCircle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormEllipse.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormEllipse.Designer.cs">
+      <DependentUpon>FormEllipse.cs</DependentUpon>
     </Compile>
     <Compile Include="FormLine.cs">
       <SubType>Form</SubType>
@@ -70,6 +77,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormCircle.resx">
       <DependentUpon>FormCircle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormEllipse.resx">
+      <DependentUpon>FormEllipse.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormLine.resx">
       <DependentUpon>FormLine.cs</DependentUpon>

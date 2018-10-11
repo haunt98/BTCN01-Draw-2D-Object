@@ -14,10 +14,11 @@ namespace Draw2D
 {
     public partial class FormLine : Form
     {
-        private Line2D line2D;
+        private Line line;
         private Bitmap bitmap;
         private Random random = new Random();
         private int numRand;
+        private List<Line> lineS = new List<Line>();
 
         public FormLine()
         {
@@ -33,20 +34,20 @@ namespace Draw2D
             }
 
             // DrawLine2D object
-            DrawLine2D drawLine2D = new DrawLine2D(bitmap);
-            if (comboBox_lineAlgo.Text.Equals("DDA"))
+            DrawLine drawLine = new DrawLine(bitmap);
+            if (comboBox_algo.Text.Equals("DDA"))
             {
-                drawLine2D.DDA(line2D, Color.Blue);
+                drawLine.DDA(line, Color.Blue);
             }
-            else if (comboBox_lineAlgo.Text.Equals("Bresenham"))
+            else if (comboBox_algo.Text.Equals("Bresenham"))
             {
-                drawLine2D.Bresenham(line2D, Color.Blue);
+                drawLine.Bresenham(line, Color.Blue);
             }
-            else if (comboBox_lineAlgo.Text.Equals("MidPoint"))
+            else if (comboBox_algo.Text.Equals("MidPoint"))
             {
-                drawLine2D.MidPoint(line2D, Color.Blue);
+                drawLine.MidPoint(line, Color.Blue);
             }
-            else if (comboBox_lineAlgo.Text.Equals("Xiaolin Wu"))
+            else if (comboBox_algo.Text.Equals("Xiaolin Wu"))
             {
             }
 
@@ -79,11 +80,11 @@ namespace Draw2D
                     "Error");
                 return false;
             }
-            line2D = new Line2D(new Point(x1, y1),
+            line = new Line(new Point(x1, y1),
                 new Point(x2, y2));
 
-            if (!isPointInsidePictureBox(line2D.p1) ||
-                !isPointInsidePictureBox(line2D.p2))
+            if (!pointInside(line.p1) ||
+                !pointInside(line.p2))
             {
                 MessageBox.Show("x1, y1, x2, y2 is too big" + Environment.NewLine +
                     "x1, y1, x2, y2 must be positive integer" + Environment.NewLine +
@@ -96,7 +97,7 @@ namespace Draw2D
             return true;
         }
 
-        private Boolean isPointInsidePictureBox(Point p)
+        private Boolean pointInside(Point p)
         {
             if (p.X < 0 || p.Y < 0 ||
                 p.X > bitmap.Width || p.Y > bitmap.Height)
@@ -106,7 +107,7 @@ namespace Draw2D
 
         private void button_clearAll_Click(object sender, EventArgs e)
         {
-            clearAllDrawing();
+            clearAll();
         }
 
         private void FormLine_Load(object sender, EventArgs e)
@@ -119,22 +120,22 @@ namespace Draw2D
             // set bitmap to picture box
             pictureBox_draw.Image = bitmap;
 
-            clearAllDrawing();
+            clearAll();
 
             // set up combo box for line drawing
-            setComboBoxLineDrawing();
+            setComboBoxAlgo();
         }
 
-        private void setComboBoxLineDrawing()
+        private void setComboBoxAlgo()
         {
-            comboBox_lineAlgo.Items.Add("DDA");
-            comboBox_lineAlgo.Items.Add("Bresenham");
-            comboBox_lineAlgo.Items.Add("MidPoint");
-            comboBox_lineAlgo.Items.Add("Xiaolin Wu");
-            comboBox_lineAlgo.SelectedIndex = 0;
+            comboBox_algo.Items.Add("DDA");
+            comboBox_algo.Items.Add("Bresenham");
+            comboBox_algo.Items.Add("MidPoint");
+            comboBox_algo.Items.Add("Xiaolin Wu");
+            comboBox_algo.SelectedIndex = 0;
         }
 
-        private void clearAllDrawing()
+        private void clearAll()
         {
             // graphics object
             Graphics graphics = Graphics.FromImage(bitmap);
@@ -159,9 +160,11 @@ namespace Draw2D
                 "then press \"Draw line\" button to draw a line from p1 to p2" + Environment.NewLine +
                 "You can clear all drawings when you press \"Clear all\" button" + Environment.NewLine +
                 Environment.NewLine +
-                "If you want to draw random line, first you input the number of lines you want to draw," + Environment.NewLine +
-                "then you press \"Random\" button, the program will randomize points and draw it to line," + Environment.NewLine +
-                "after drawing, the program will output the time it took to draw" + Environment.NewLine,
+                "If you want to draw random line, input the number of lines you want to draw, then press \"Draw Button\"" + Environment.NewLine +
+                "First time press \"Draw Random\", the program automatically random generate a random list line" + Environment.NewLine +
+                "Next time you press it, the program will use already-have random list line to draw" + Environment.NewLine +
+                "To have new random list line, press \"Random Generate\"" + Environment.NewLine +
+                "After drawing, the program will output the time it took to draw",
                 "Help");
         }
 
@@ -173,10 +176,14 @@ namespace Draw2D
             }
 
             // clear all drawings before random
-            clearAllDrawing();
+            clearAll();
 
-            // get a random list of line
-            List<Line2D> line2DS = randListLine2D(numRand);
+            // if no random list line, or old one is not enough, create new one
+            // otherwise, use the already have random list line
+            if (lineS.Count < this.numRand)
+            {
+                randLineS(numRand);
+            }
 
             // StopWatch object for calculating execution time of the algorithm
             // StartNew and Stop for make sure stopwatch is not redundant object
@@ -184,35 +191,35 @@ namespace Draw2D
             stopwatch.Stop();
 
             // DrawLine2D object
-            DrawLine2D drawLine2D = new DrawLine2D(bitmap);
-            if (comboBox_lineAlgo.Text.Equals("DDA"))
+            DrawLine drawLine2D = new DrawLine(bitmap);
+            if (comboBox_algo.Text.Equals("DDA"))
             {
                 stopwatch.Restart();
                 for (int i = 0; i < numRand; ++i)
                 {
-                    drawLine2D.DDA(line2DS[i], Color.Blue);
+                    drawLine2D.DDA(lineS[i], Color.Blue);
                 }
                 stopwatch.Stop();
             }
-            else if (comboBox_lineAlgo.Text.Equals("Bresenham"))
+            else if (comboBox_algo.Text.Equals("Bresenham"))
             {
                 stopwatch.Restart();
                 for (int i = 0; i < numRand; ++i)
                 {
-                    drawLine2D.Bresenham(line2DS[i], Color.Blue);
+                    drawLine2D.Bresenham(lineS[i], Color.Blue);
                 }
                 stopwatch.Stop();
             }
-            else if (comboBox_lineAlgo.Text.Equals("MidPoint"))
+            else if (comboBox_algo.Text.Equals("MidPoint"))
             {
                 stopwatch.Restart();
                 for (int i = 0; i < numRand; ++i)
                 {
-                    drawLine2D.MidPoint(line2DS[i], Color.Blue);
+                    drawLine2D.MidPoint(lineS[i], Color.Blue);
                 }
                 stopwatch.Stop();
             }
-            else if (comboBox_lineAlgo.Text.Equals("Xiaolin Wu"))
+            else if (comboBox_algo.Text.Equals("Xiaolin Wu"))
             {
             }
 
@@ -247,17 +254,26 @@ namespace Draw2D
             return true;
         }
 
-        private List<Line2D> randListLine2D(int num)
+        private void randLineS(int num)
         {
-            List<Line2D> line2DS = new List<Line2D>();
+            lineS.Clear();
+
             for (int i = 0; i < num; ++i)
             {
-                line2DS.Add(new Line2D(new Point(random.Next(bitmap.Width),
+                lineS.Add(new Line(new Point(random.Next(bitmap.Width),
                     random.Next(bitmap.Height)),
                     new Point(random.Next(bitmap.Width),
                     random.Next(bitmap.Height))));
             }
-            return line2DS;
+        }
+
+        private void button_randGen_Click(object sender, EventArgs e)
+        {
+            if (!get_numRand())
+            {
+                return;
+            }
+            randLineS(numRand);
         }
     }
 }

@@ -27,29 +27,29 @@ namespace Draw2D
             }
 
             // DrawCircle 2D object
-            DrawCircle2D drawCircle2D = new DrawCircle2D(bitmap);
+            DrawCircle drawCircle2D = new DrawCircle(bitmap);
             if (comboBox_algo.Text.Equals("DDA"))
             {
-                drawCircle2D.DDA(circle2D, Color.Blue);
+                drawCircle2D.DDA(circle, Color.Blue);
             }
             else if (comboBox_algo.Text.Equals("Bresenham"))
             {
-                drawCircle2D.Bresenham(circle2D, Color.Blue);
+                drawCircle2D.Bresenham(circle, Color.Blue);
             }
             else if (comboBox_algo.Text.Equals("MidPoint"))
             {
-                drawCircle2D.MidPoint(circle2D, Color.Blue);
+                drawCircle2D.MidPoint(circle, Color.Blue);
             }
 
             // refresh picture box every draw
             pictureBox_draw.Refresh();
         }
 
-        private Circle2D circle2D;
+        private Circle circle;
         private Bitmap bitmap;
         private Random random = new Random();
         private int numRand;
-        private List<Circle2D> circle2DS = new List<Circle2D>();
+        private List<Circle> circleS = new List<Circle>();
 
         private Boolean get_circle2D()
         {
@@ -73,9 +73,9 @@ namespace Draw2D
                     "Error");
                 return false;
             }
-            circle2D = new Circle2D(new Point(x, y), R);
+            circle = new Circle(new Point(x, y), R);
 
-            if (!insidePictureBox())
+            if (!circleInside())
             {
                 MessageBox.Show("x, y, R value is not suitable" + Environment.NewLine +
                     "x, y, R, x - R, y - R must be positive integer" + Environment.NewLine +
@@ -88,10 +88,10 @@ namespace Draw2D
             return true;
         }
 
-        private Boolean insidePictureBox()
+        private Boolean circleInside()
         {
-            Point center = circle2D.center;
-            int R = circle2D.R;
+            Point center = circle.center;
+            int R = circle.R;
 
             if (center.X < 0 || center.Y < 0 || R < 0 ||
                 center.X - R < 0 || center.Y - R < 0 ||
@@ -115,13 +115,13 @@ namespace Draw2D
             // set bitmap to picture box
             pictureBox_draw.Image = bitmap;
 
-            clearAllDrawing();
+            clearAll();
 
             // set up combo box for circle drawing
-            setComboBoxCircleDrawing();
+            setComboBoxAlgo();
         }
 
-        private void setComboBoxCircleDrawing()
+        private void setComboBoxAlgo()
         {
             comboBox_algo.Items.Add("DDA");
             comboBox_algo.Items.Add("Bresenham");
@@ -129,7 +129,7 @@ namespace Draw2D
             comboBox_algo.SelectedIndex = 0;
         }
 
-        private void clearAllDrawing()
+        private void clearAll()
         {
             // graphics object
             Graphics graphics = Graphics.FromImage(bitmap);
@@ -144,10 +144,10 @@ namespace Draw2D
 
         private void button_clear_Click(object sender, EventArgs e)
         {
-            clearAllDrawing();
+            clearAll();
         }
 
-        private void button_rand_Click(object sender, EventArgs e)
+        private void button_randDraw_click(object sender, EventArgs e)
         {
             if (!get_randNum())
             {
@@ -155,10 +155,14 @@ namespace Draw2D
             }
 
             // clear all drawings before random
-            clearAllDrawing();
+            clearAll();
 
-            // get a random list of circle
-            randListCircle2D(numRand);
+            // if no random list circle, or old one is not enough, create new one
+            // otherwise, use the already have random list circle
+            if (circleS.Count < this.numRand)
+            {
+                randCircleS(numRand);
+            }
 
             // StopWatch object for calculating execution time of the algorithm
             // StartNew and Stop for make sure stopwatch is not redundant object
@@ -166,13 +170,13 @@ namespace Draw2D
             stopwatch.Stop();
 
             // DrawCircle2D object
-            DrawCircle2D drawCircle2D = new DrawCircle2D(bitmap);
+            DrawCircle drawCircle2D = new DrawCircle(bitmap);
             if (comboBox_algo.Text.Equals("DDA"))
             {
                 stopwatch.Restart();
                 for (int i = 0; i < numRand; ++i)
                 {
-                    drawCircle2D.DDA(circle2DS[i], Color.Blue);
+                    drawCircle2D.DDA(circleS[i], Color.Blue);
                 }
                 stopwatch.Stop();
             }
@@ -181,7 +185,7 @@ namespace Draw2D
                 stopwatch.Restart();
                 for (int i = 0; i < numRand; ++i)
                 {
-                    drawCircle2D.Bresenham(circle2DS[i], Color.Blue);
+                    drawCircle2D.Bresenham(circleS[i], Color.Blue);
                 }
                 stopwatch.Stop();
             }
@@ -190,7 +194,7 @@ namespace Draw2D
                 stopwatch.Restart();
                 for (int i = 0; i < numRand; ++i)
                 {
-                    drawCircle2D.MidPoint(circle2DS[i], Color.Blue);
+                    drawCircle2D.MidPoint(circleS[i], Color.Blue);
                 }
                 stopwatch.Stop();
             }
@@ -202,11 +206,11 @@ namespace Draw2D
             pictureBox_draw.Refresh();
         }
 
-        private void randListCircle2D(int numRand)
+        private void randCircleS(int num)
         {
-            circle2DS.Clear();
+            circleS.Clear();
 
-            for (int i = 0; i < numRand; ++i)
+            for (int i = 0; i < num; ++i)
             {
                 int x = random.Next(bitmap.Width);
                 int y = random.Next(bitmap.Height);
@@ -215,7 +219,7 @@ namespace Draw2D
                     ? bitmap.Width - x : bitmap.Height - y;
                 int min = min_xy < min_wh ? min_xy : min_wh;
                 int R = random.Next(min);
-                circle2DS.Add(new Circle2D(new Point(x, y), R));
+                circleS.Add(new Circle(new Point(x, y), R));
             }
         }
 
@@ -249,8 +253,23 @@ namespace Draw2D
                 "R is radius of circle" + Environment.NewLine +
                 "x, y, R, x - R, y - R must be positive integer" + Environment.NewLine +
                 "x, x + R must be less or equal than " + bitmap.Width + Environment.NewLine +
-                "y, y + R must be less or equal than " + bitmap.Height + Environment.NewLine,
+                "y, y + R must be less or equal than " + bitmap.Height + Environment.NewLine +
+                Environment.NewLine +
+                "If you want to draw random circle, input the number of circles you want to draw, then press \"Draw Button\"" + Environment.NewLine +
+                "First time press \"Draw Random\", the program automatically random generate a random list circle" + Environment.NewLine +
+                "Next time you press it, the program will use already-have random list circle to draw" + Environment.NewLine +
+                "To have new random list circle, press \"Random Generate\"" + Environment.NewLine +
+                "After drawing, the program will output the time it took to draw",
                 "Help");
+        }
+
+        private void button_drawGen_Click(object sender, EventArgs e)
+        {
+            if (!get_randNum())
+            {
+                return;
+            }
+            randCircleS(numRand);
         }
     }
 }

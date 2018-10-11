@@ -40,12 +40,13 @@
             this.button_draw = new System.Windows.Forms.Button();
             this.button_clear = new System.Windows.Forms.Button();
             this.pictureBox_draw = new System.Windows.Forms.PictureBox();
-            this.button_rand = new System.Windows.Forms.Button();
+            this.button_randDraw = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.textBox_numRand = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.textBox_timeRand = new System.Windows.Forms.TextBox();
             this.button_help = new System.Windows.Forms.Button();
+            this.button_drawGen = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_draw)).BeginInit();
             this.SuspendLayout();
             // 
@@ -136,7 +137,7 @@
             // 
             // button_clear
             // 
-            this.button_clear.Location = new System.Drawing.Point(569, 39);
+            this.button_clear.Location = new System.Drawing.Point(650, 42);
             this.button_clear.Name = "button_clear";
             this.button_clear.Size = new System.Drawing.Size(75, 23);
             this.button_clear.TabIndex = 10;
@@ -146,26 +147,26 @@
             // 
             // pictureBox_draw
             // 
-            this.pictureBox_draw.Location = new System.Drawing.Point(16, 68);
+            this.pictureBox_draw.Location = new System.Drawing.Point(16, 71);
             this.pictureBox_draw.Name = "pictureBox_draw";
-            this.pictureBox_draw.Size = new System.Drawing.Size(709, 333);
+            this.pictureBox_draw.Size = new System.Drawing.Size(709, 330);
             this.pictureBox_draw.TabIndex = 11;
             this.pictureBox_draw.TabStop = false;
             // 
-            // button_rand
+            // button_randDraw
             // 
-            this.button_rand.Location = new System.Drawing.Point(40, 37);
-            this.button_rand.Name = "button_rand";
-            this.button_rand.Size = new System.Drawing.Size(75, 23);
-            this.button_rand.TabIndex = 12;
-            this.button_rand.Text = "Random";
-            this.button_rand.UseVisualStyleBackColor = true;
-            this.button_rand.Click += new System.EventHandler(this.button_rand_Click);
+            this.button_randDraw.Location = new System.Drawing.Point(144, 39);
+            this.button_randDraw.Name = "button_randDraw";
+            this.button_randDraw.Size = new System.Drawing.Size(99, 23);
+            this.button_randDraw.TabIndex = 12;
+            this.button_randDraw.Text = "Draw Random";
+            this.button_randDraw.UseVisualStyleBackColor = true;
+            this.button_randDraw.Click += new System.EventHandler(this.button_randDraw_click);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(121, 42);
+            this.label6.Location = new System.Drawing.Point(249, 45);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(139, 13);
             this.label6.TabIndex = 13;
@@ -173,7 +174,7 @@
             // 
             // textBox_numRand
             // 
-            this.textBox_numRand.Location = new System.Drawing.Point(267, 39);
+            this.textBox_numRand.Location = new System.Drawing.Point(394, 42);
             this.textBox_numRand.Name = "textBox_numRand";
             this.textBox_numRand.Size = new System.Drawing.Size(57, 20);
             this.textBox_numRand.TabIndex = 14;
@@ -181,7 +182,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(330, 41);
+            this.label7.Location = new System.Drawing.Point(457, 45);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(106, 13);
             this.label7.TabIndex = 15;
@@ -190,7 +191,7 @@
             // textBox_timeRand
             // 
             this.textBox_timeRand.Enabled = false;
-            this.textBox_timeRand.Location = new System.Drawing.Point(442, 38);
+            this.textBox_timeRand.Location = new System.Drawing.Point(569, 42);
             this.textBox_timeRand.Name = "textBox_timeRand";
             this.textBox_timeRand.Size = new System.Drawing.Size(74, 20);
             this.textBox_timeRand.TabIndex = 16;
@@ -205,17 +206,28 @@
             this.button_help.UseVisualStyleBackColor = true;
             this.button_help.Click += new System.EventHandler(this.button_help_Click);
             // 
+            // button_drawGen
+            // 
+            this.button_drawGen.Location = new System.Drawing.Point(28, 39);
+            this.button_drawGen.Name = "button_drawGen";
+            this.button_drawGen.Size = new System.Drawing.Size(110, 23);
+            this.button_drawGen.TabIndex = 18;
+            this.button_drawGen.Text = "Random Generate";
+            this.button_drawGen.UseVisualStyleBackColor = true;
+            this.button_drawGen.Click += new System.EventHandler(this.button_drawGen_Click);
+            // 
             // FormCircle
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(747, 420);
+            this.Controls.Add(this.button_drawGen);
             this.Controls.Add(this.button_help);
             this.Controls.Add(this.textBox_timeRand);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.textBox_numRand);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.button_rand);
+            this.Controls.Add(this.button_randDraw);
             this.Controls.Add(this.pictureBox_draw);
             this.Controls.Add(this.button_clear);
             this.Controls.Add(this.button_draw);
@@ -229,7 +241,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "FormCircle";
-            this.Text = "FormCircle";
+            this.Text = "Draw Circle 2D";
             this.Load += new System.EventHandler(this.FormCircle_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_draw)).EndInit();
             this.ResumeLayout(false);
@@ -251,11 +263,12 @@
         private System.Windows.Forms.Button button_draw;
         private System.Windows.Forms.Button button_clear;
         private System.Windows.Forms.PictureBox pictureBox_draw;
-        private System.Windows.Forms.Button button_rand;
+        private System.Windows.Forms.Button button_randDraw;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox_numRand;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox textBox_timeRand;
         private System.Windows.Forms.Button button_help;
+        private System.Windows.Forms.Button button_drawGen;
     }
 }

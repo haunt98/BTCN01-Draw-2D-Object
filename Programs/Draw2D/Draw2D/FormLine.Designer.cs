@@ -39,16 +39,17 @@
             this.button_drawLine = new System.Windows.Forms.Button();
             this.button_clearAllLine = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.comboBox_lineAlgo = new System.Windows.Forms.ComboBox();
+            this.comboBox_algo = new System.Windows.Forms.ComboBox();
             this.pictureBox_draw = new System.Windows.Forms.PictureBox();
             this.button_helpLine = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.button_randomLine = new System.Windows.Forms.Button();
+            this.button_randDraw = new System.Windows.Forms.Button();
             this.textBox_randLineNum = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.textBox_randLineTime = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.button_randGen = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_draw)).BeginInit();
             this.SuspendLayout();
             // 
@@ -147,24 +148,24 @@
             // 
             // comboBox_lineAlgo
             // 
-            this.comboBox_lineAlgo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_lineAlgo.FormattingEnabled = true;
-            this.comboBox_lineAlgo.Location = new System.Drawing.Point(318, 6);
-            this.comboBox_lineAlgo.Name = "comboBox_lineAlgo";
-            this.comboBox_lineAlgo.Size = new System.Drawing.Size(121, 21);
-            this.comboBox_lineAlgo.TabIndex = 11;
+            this.comboBox_algo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_algo.FormattingEnabled = true;
+            this.comboBox_algo.Location = new System.Drawing.Point(318, 6);
+            this.comboBox_algo.Name = "comboBox_lineAlgo";
+            this.comboBox_algo.Size = new System.Drawing.Size(121, 21);
+            this.comboBox_algo.TabIndex = 11;
             // 
             // pictureBox_draw
             // 
-            this.pictureBox_draw.Location = new System.Drawing.Point(12, 73);
+            this.pictureBox_draw.Location = new System.Drawing.Point(12, 64);
             this.pictureBox_draw.Name = "pictureBox_draw";
-            this.pictureBox_draw.Size = new System.Drawing.Size(697, 261);
+            this.pictureBox_draw.Size = new System.Drawing.Size(800, 270);
             this.pictureBox_draw.TabIndex = 12;
             this.pictureBox_draw.TabStop = false;
             // 
             // button_helpLine
             // 
-            this.button_helpLine.Location = new System.Drawing.Point(634, 5);
+            this.button_helpLine.Location = new System.Drawing.Point(607, 5);
             this.button_helpLine.Name = "button_helpLine";
             this.button_helpLine.Size = new System.Drawing.Size(75, 23);
             this.button_helpLine.TabIndex = 13;
@@ -190,19 +191,19 @@
             this.label7.TabIndex = 15;
             this.label7.Text = "Point p2";
             // 
-            // button_randomLine
+            // button_randDraw
             // 
-            this.button_randomLine.Location = new System.Drawing.Point(227, 34);
-            this.button_randomLine.Name = "button_randomLine";
-            this.button_randomLine.Size = new System.Drawing.Size(75, 23);
-            this.button_randomLine.TabIndex = 16;
-            this.button_randomLine.Text = "Random";
-            this.button_randomLine.UseVisualStyleBackColor = true;
-            this.button_randomLine.Click += new System.EventHandler(this.button_rand_click);
+            this.button_randDraw.Location = new System.Drawing.Point(325, 35);
+            this.button_randDraw.Name = "button_randDraw";
+            this.button_randDraw.Size = new System.Drawing.Size(85, 23);
+            this.button_randDraw.TabIndex = 16;
+            this.button_randDraw.Text = "Draw Random";
+            this.button_randDraw.UseVisualStyleBackColor = true;
+            this.button_randDraw.Click += new System.EventHandler(this.button_rand_click);
             // 
             // textBox_randLineNum
             // 
-            this.textBox_randLineNum.Location = new System.Drawing.Point(444, 36);
+            this.textBox_randLineNum.Location = new System.Drawing.Point(552, 37);
             this.textBox_randLineNum.Name = "textBox_randLineNum";
             this.textBox_randLineNum.Size = new System.Drawing.Size(67, 20);
             this.textBox_randLineNum.TabIndex = 17;
@@ -210,7 +211,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(308, 39);
+            this.label8.Location = new System.Drawing.Point(416, 40);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(130, 13);
             this.label8.TabIndex = 18;
@@ -219,7 +220,7 @@
             // textBox_randLineTime
             // 
             this.textBox_randLineTime.Enabled = false;
-            this.textBox_randLineTime.Location = new System.Drawing.Point(634, 38);
+            this.textBox_randLineTime.Location = new System.Drawing.Point(737, 38);
             this.textBox_randLineTime.Name = "textBox_randLineTime";
             this.textBox_randLineTime.Size = new System.Drawing.Size(75, 20);
             this.textBox_randLineTime.TabIndex = 19;
@@ -227,27 +228,38 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(517, 41);
+            this.label9.Location = new System.Drawing.Point(625, 41);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(106, 13);
             this.label9.TabIndex = 20;
             this.label9.Text = "Time running random";
             // 
+            // button_randGen
+            // 
+            this.button_randGen.Location = new System.Drawing.Point(216, 34);
+            this.button_randGen.Name = "button_randGen";
+            this.button_randGen.Size = new System.Drawing.Size(103, 23);
+            this.button_randGen.TabIndex = 21;
+            this.button_randGen.Text = "Random Generate";
+            this.button_randGen.UseVisualStyleBackColor = true;
+            this.button_randGen.Click += new System.EventHandler(this.button_randGen_Click);
+            // 
             // FormLine
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(726, 346);
+            this.ClientSize = new System.Drawing.Size(836, 346);
+            this.Controls.Add(this.button_randGen);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.textBox_randLineTime);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.textBox_randLineNum);
-            this.Controls.Add(this.button_randomLine);
+            this.Controls.Add(this.button_randDraw);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.button_helpLine);
             this.Controls.Add(this.pictureBox_draw);
-            this.Controls.Add(this.comboBox_lineAlgo);
+            this.Controls.Add(this.comboBox_algo);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.button_clearAllLine);
             this.Controls.Add(this.button_drawLine);
@@ -281,16 +293,17 @@
         private System.Windows.Forms.Button button_drawLine;
         private System.Windows.Forms.Button button_clearAllLine;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox comboBox_lineAlgo;
+        private System.Windows.Forms.ComboBox comboBox_algo;
         private System.Windows.Forms.PictureBox pictureBox_draw;
         private System.Windows.Forms.Button button_helpLine;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button button_randomLine;
+        private System.Windows.Forms.Button button_randDraw;
         private System.Windows.Forms.TextBox textBox_randLineNum;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox textBox_randLineTime;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button button_randGen;
     }
 }
 

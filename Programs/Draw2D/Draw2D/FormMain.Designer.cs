@@ -64,6 +64,7 @@
             this.button_openEllipseDraw.TabIndex = 2;
             this.button_openEllipseDraw.Text = "Ellipse Draw";
             this.button_openEllipseDraw.UseVisualStyleBackColor = true;
+            this.button_openEllipseDraw.Click += new System.EventHandler(this.button_openEllipseDraw_Click);
             // 
             // button_openParabolDraw
             // 

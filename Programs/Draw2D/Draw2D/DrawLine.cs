@@ -8,12 +8,12 @@ using System.IO;
 
 namespace Draw2D
 {
-    public class Line2D
+    public class Line
     {
         public Point p1 { get; set; }
         public Point p2 { get; set; }
 
-        public Line2D(Point pp1, Point pp2)
+        public Line(Point pp1, Point pp2)
         {
             p1 = new Point(pp1.X, pp1.Y);
             p2 = new Point(pp2.X, pp2.Y);
@@ -26,18 +26,18 @@ namespace Draw2D
         }
     }
 
-    public class DrawLine2D
+    public class DrawLine
     {
         private Bitmap bitmap;
 
-        public DrawLine2D(Bitmap b)
+        public DrawLine(Bitmap b)
         {
             bitmap = b;
         }
 
         // Use the idea from the code in following links
         // https://www.tutorialspoint.com/computer_graphics/line_generation_algorithm.htm
-        public void DDA(Line2D line2D, Color color)
+        public void DDA(Line line2D, Color color)
         {
             Point p1 = line2D.p1;
             Point p2 = line2D.p2;
@@ -72,7 +72,7 @@ namespace Draw2D
 
         // Use the idea from the code in following links
         // https://csustan.csustan.edu/~tom/Lecture-Notes/Graphics/Bresenham-Line/Bresenham-Line.pdf
-        public void Bresenham(Line2D line2D, Color color)
+        public void Bresenham(Line line2D, Color color)
         {
             Point p1 = line2D.p1;
             Point p2 = line2D.p2;
@@ -187,7 +187,7 @@ namespace Draw2D
         }
 
         // Bresenham and MidPoint draw line is actually the same
-        public void MidPoint(Line2D line2D, Color color)
+        public void MidPoint(Line line2D, Color color)
         {
             Point p1 = line2D.p1;
             Point p2 = line2D.p2;
@@ -292,7 +292,7 @@ namespace Draw2D
         // https://en.wikipedia.org/wiki/Xiaolin_Wu%27s_line_algorithm
         // https://www.geeksforgeeks.org/anti-aliased-line-xiaolin-wus-algorithm/
         // TODO find a way to setPixel with float color
-        public void XiaolinWu(Line2D line2D)
+        public void XiaolinWu(Line line2D)
         {
             Point p1 = line2D.p1;
             Point p2 = line2D.p2;

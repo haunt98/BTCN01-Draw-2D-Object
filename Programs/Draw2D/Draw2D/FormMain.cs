@@ -35,5 +35,11 @@ namespace Draw2D
             FormCircle formCircle = new FormCircle();
             formCircle.Show();
         }
+
+        private void button_openEllipseDraw_Click(object sender, EventArgs e)
+        {
+            FormEllipse formEllipse = new FormEllipse();
+            formEllipse.Show();
+        }
     }
 }
