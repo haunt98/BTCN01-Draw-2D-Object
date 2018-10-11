@@ -26,7 +26,6 @@ namespace Draw2D
                 return;
             }
 
-            // DrawCircle 2D object
             DrawCircle drawCircle2D = new DrawCircle(bitmap);
             if (comboBox_algo.Text.Equals("DDA"))
             {
@@ -169,7 +168,6 @@ namespace Draw2D
             Stopwatch stopwatch = Stopwatch.StartNew();
             stopwatch.Stop();
 
-            // DrawCircle2D object
             DrawCircle drawCircle2D = new DrawCircle(bitmap);
             if (comboBox_algo.Text.Equals("DDA"))
             {
@@ -249,7 +247,10 @@ namespace Draw2D
 
         private void button_help_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("x, y is cordinate of center point of circle" + Environment.NewLine +
+            MessageBox.Show("Equation: X^2 + Y^2 = R^2" + Environment.NewLine +
+                Environment.NewLine +
+                "Input:" + Environment.NewLine +
+                "x, y is cordinate of center point of circle" + Environment.NewLine +
                 "R is radius of circle" + Environment.NewLine +
                 "x, y, R, x - R, y - R must be positive integer" + Environment.NewLine +
                 "x, x + R must be less or equal than " + bitmap.Width + Environment.NewLine +

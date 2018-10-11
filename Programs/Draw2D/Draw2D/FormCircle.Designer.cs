@@ -55,9 +55,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(13, 13);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(64, 13);
+            this.label1.Size = new System.Drawing.Size(65, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Point center";
+            this.label1.Text = "Point Center";
             // 
             // label2
             // 

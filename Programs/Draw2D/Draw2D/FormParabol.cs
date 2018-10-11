@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
@@ -72,7 +73,13 @@ namespace Draw2D
 
         private void button_help_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("",
+            MessageBox.Show("Equation Y = (a/b) * X^2" + Environment.NewLine +
+                Environment.NewLine +
+                "Input" + Environment.NewLine +
+                "x, y must be non negative integer" + Environment.NewLine +
+                "a, b must be positive integer" + Environment.NewLine +
+                "x must be less or equal than " + bitmap.Width + Environment.NewLine +
+                "y must be less or equal than " + bitmap.Height + Environment.NewLine,
                 "Help");
         }
 
@@ -106,6 +113,8 @@ namespace Draw2D
             {
                 return;
             }
+
+            randParabolS(numRand);
         }
 
         private void button_randDraw_Click(object sender, EventArgs e)
@@ -113,6 +122,138 @@ namespace Draw2D
             if (!get_randNum())
             {
                 return;
+            }
+
+            // clear all drawings before random
+            clearAll();
+
+            // if no random list parabol, or old one is not enough, create new one
+            // otherwise, use the already have random list parabol
+            if (parabolS.Count < this.numRand)
+            {
+                randParabolS(numRand);
+            }
+
+            // StopWatch object for calculating execution time of the algorithm
+            // StartNew and Stop for make sure stopwatch is not redundant object
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            stopwatch.Stop();
+
+            DrawParabol drawParabol = new DrawParabol(bitmap);
+            if (comboBox_algo.Text.Equals("DDA"))
+            {
+                stopwatch.Restart();
+                for (int i = 0; i < numRand; ++i)
+                {
+                    drawParabol.DDA(parabolS[i], Color.Blue);
+                }
+                stopwatch.Stop();
+            }
+            else if (comboBox_algo.Text.Equals("Bresenham"))
+            {
+                stopwatch.Restart();
+                for (int i = 0; i < numRand; ++i)
+                {
+                    drawParabol.Bresenham(parabolS[i], Color.Blue);
+                }
+                stopwatch.Stop();
+            }
+            else if (comboBox_algo.Text.Equals("MidPoint"))
+            {
+                stopwatch.Restart();
+                for (int i = 0; i < numRand; ++i)
+                {
+                    drawParabol.MidPoint(parabolS[i], Color.Blue);
+                }
+                stopwatch.Stop();
+            }
+
+            // set running time to text box
+            textBox_randTime.Text = stopwatch.ElapsedMilliseconds.ToString() + " ms";
+
+            // refresh picture box every draw
+            pictureBox_draw.Refresh();
+        }
+
+        private void button_draw_Click(object sender, EventArgs e)
+        {
+            if (!get_parabol())
+            {
+                return;
+            }
+
+            DrawParabol drawParapol = new DrawParabol(bitmap);
+            if (comboBox_algo.Text.Equals("DDA"))
+            {
+                drawParapol.DDA(parabol, Color.Blue);
+            }
+            else if (comboBox_algo.Text.Equals("Bresenham"))
+            {
+                drawParapol.Bresenham(parabol, Color.Blue);
+            }
+            else if (comboBox_algo.Text.Equals("MidPoint"))
+            {
+                drawParapol.MidPoint(parabol, Color.Blue);
+            }
+
+            // refresh picture box every draw
+            pictureBox_draw.Refresh();
+        }
+
+        private Boolean get_parabol()
+        {
+            if (string.IsNullOrWhiteSpace(textBox_x.Text) ||
+                string.IsNullOrWhiteSpace(textBox_y.Text) ||
+                string.IsNullOrWhiteSpace(textBox_a.Text) ||
+                string.IsNullOrWhiteSpace(textBox_b.Text))
+            {
+                MessageBox.Show("Missing x, y, a, b",
+                    "Error");
+                return false;
+            }
+
+            int x, y, a, b;
+            if (!int.TryParse(textBox_x.Text, out x) ||
+                !int.TryParse(textBox_y.Text, out y) ||
+                !int.TryParse(textBox_a.Text, out a) ||
+                !int.TryParse(textBox_b.Text, out b))
+            {
+                MessageBox.Show("Wrong format" + Environment.NewLine +
+                    "x, y must be non negative integer" + Environment.NewLine +
+                    "a, b must be positive integer" + Environment.NewLine +
+                    "x must be less or equal than " + bitmap.Width + Environment.NewLine +
+                    "y must be less or equal than " + bitmap.Height + Environment.NewLine,
+                    "Error");
+                return false;
+            }
+            if (x < 0 || x > bitmap.Width ||
+                y < 0 || y > bitmap.Width ||
+                a <= 0 || b <= 0)
+            {
+                MessageBox.Show("Wrong format" + Environment.NewLine +
+                    "x, y must be non negative integer" + Environment.NewLine +
+                    "a, b must be positive integer" + Environment.NewLine +
+                    "x must be less or equal than " + bitmap.Width + Environment.NewLine +
+                    "y must be less or equal than " + bitmap.Height + Environment.NewLine,
+                    "Error");
+                return false;
+            }
+            parabol = new Parabol(new Point(x, y), a, b);
+
+            return true;
+        }
+
+        private void randParabolS(int num)
+        {
+            parabolS.Clear();
+
+            for (int i = 0; i < num; ++i)
+            {
+                int x = random.Next(bitmap.Width);
+                int y = random.Next(bitmap.Height);
+                int a = random.Next(100);
+                int b = random.Next(1, 100);
+                parabolS.Add(new Parabol(new Point(x, y), a, b));
             }
         }
     }

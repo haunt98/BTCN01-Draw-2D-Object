@@ -33,7 +33,6 @@ namespace Draw2D
                 return;
             }
 
-            // DrawLine2D object
             DrawLine drawLine = new DrawLine(bitmap);
             if (comboBox_algo.Text.Equals("DDA"))
             {
@@ -190,7 +189,6 @@ namespace Draw2D
             Stopwatch stopwatch = Stopwatch.StartNew();
             stopwatch.Stop();
 
-            // DrawLine2D object
             DrawLine drawLine2D = new DrawLine(bitmap);
             if (comboBox_algo.Text.Equals("DDA"))
             {

@@ -69,7 +69,6 @@ namespace Draw2D
                 return;
             }
 
-            // DrawEllipse object
             DrawEllipse drawEllipse = new DrawEllipse(bitmap);
             if (comboBox_algo.Text.Equals("DDA"))
             {
@@ -90,8 +89,6 @@ namespace Draw2D
 
         private Boolean get_ellipse()
         {
-            int x, y, a, b;
-
             if (string.IsNullOrWhiteSpace(textBox_x.Text) ||
                 string.IsNullOrWhiteSpace(textBox_y.Text) ||
                 string.IsNullOrWhiteSpace(textBox_a.Text) ||
@@ -101,13 +98,16 @@ namespace Draw2D
                     "Error");
                 return false;
             }
+
+            int x, y, a, b;
             if (!int.TryParse(textBox_x.Text, out x) ||
                 !int.TryParse(textBox_y.Text, out y) ||
                 !int.TryParse(textBox_a.Text, out a) ||
                 !int.TryParse(textBox_b.Text, out b))
             {
                 MessageBox.Show("Wrong format" + Environment.NewLine +
-                    "x, y, a, b, x - a, y - b must be positive integer" + Environment.NewLine +
+                    "x, y must be non negative integer" + Environment.NewLine +
+                    "a, b, x - a, y - b must be positive integer" + Environment.NewLine +
                     "x, x + a must be less or equal than " + bitmap.Width + Environment.NewLine +
                     "y, y + b must be less or equal than " + bitmap.Height + Environment.NewLine,
                     "Error");
@@ -118,7 +118,8 @@ namespace Draw2D
             if (!ellipseInside())
             {
                 MessageBox.Show("x, y, a, b value is not suitable" + Environment.NewLine +
-                    "x, y, a, b, x - a, y - b must be positive integer" + Environment.NewLine +
+                    "x, y must be non negative integer" + Environment.NewLine +
+                    "a, b, x - a, y - b must be positive integer" + Environment.NewLine +
                     "x, x + a must be less or equal than " + bitmap.Width + Environment.NewLine +
                     "y, y + b must be less or equal than " + bitmap.Height + Environment.NewLine,
                     "Error");
@@ -135,8 +136,8 @@ namespace Draw2D
             int b = ellipse.b;
             if (center.X < 0 || center.X > bitmap.Width ||
                 center.Y < 0 || center.Y > bitmap.Height ||
-                a < 0 || center.X - a < 0 || center.X + a > bitmap.Width ||
-                b < 0 || center.Y - b < 0 || center.Y + b > bitmap.Height)
+                a <= 0 || center.X - a < 0 || center.X + a > bitmap.Width ||
+                b <= 0 || center.Y - b < 0 || center.Y + b > bitmap.Height)
                 return false;
             return true;
         }
@@ -152,6 +153,7 @@ namespace Draw2D
             {
                 return;
             }
+
             randEllipseS(numRand);
         }
 
@@ -195,7 +197,6 @@ namespace Draw2D
             Stopwatch stopwatch = Stopwatch.StartNew();
             stopwatch.Stop();
 
-            // DrawEllipse object
             DrawEllipse drawEllipse = new DrawEllipse(bitmap);
             if (comboBox_algo.Text.Equals("DDA"))
             {
@@ -258,9 +259,13 @@ namespace Draw2D
 
         private void button_help_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("x, y is cordinate of center point of ellipse" + Environment.NewLine +
+            MessageBox.Show("Equation: X^2/a^2 + Y^2/b^2 = 1" + Environment.NewLine +
+                Environment.NewLine +
+                "Input:" + Environment.NewLine +
+                "x, y is cordinate of center point of ellipse" + Environment.NewLine +
                 "a, b is radius of ellipse" + Environment.NewLine +
-                "x, y, a, b, x - a, y - b must be positive integer" + Environment.NewLine +
+                "x, y must be non negative integer" + Environment.NewLine +
+                "a, b, x - a, y - b must be positive integer" + Environment.NewLine +
                 "x, x + a must be less or equal than " + bitmap.Width + Environment.NewLine +
                 "y, y + b must be less or equal than " + bitmap.Height + Environment.NewLine +
                 Environment.NewLine +

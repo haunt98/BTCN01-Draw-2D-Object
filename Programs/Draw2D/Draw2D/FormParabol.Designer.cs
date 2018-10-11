@@ -40,13 +40,22 @@
             this.button_randDraw = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.textBox_randTime = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.textBox_x = new System.Windows.Forms.TextBox();
+            this.textBox_y = new System.Windows.Forms.TextBox();
+            this.textBox_a = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.textBox_b = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_draw)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(148, 15);
+            this.label1.Location = new System.Drawing.Point(385, 13);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(88, 13);
             this.label1.TabIndex = 0;
@@ -57,23 +66,24 @@
             // 
             this.comboBox_algo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_algo.FormattingEnabled = true;
-            this.comboBox_algo.Location = new System.Drawing.Point(242, 12);
+            this.comboBox_algo.Location = new System.Drawing.Point(479, 10);
             this.comboBox_algo.Name = "comboBox_algo";
-            this.comboBox_algo.Size = new System.Drawing.Size(121, 21);
+            this.comboBox_algo.Size = new System.Drawing.Size(92, 21);
             this.comboBox_algo.TabIndex = 1;
             // 
             // button_draw
             // 
-            this.button_draw.Location = new System.Drawing.Point(369, 12);
+            this.button_draw.Location = new System.Drawing.Point(577, 9);
             this.button_draw.Name = "button_draw";
             this.button_draw.Size = new System.Drawing.Size(82, 23);
             this.button_draw.TabIndex = 2;
             this.button_draw.Text = "Draw Parapol";
             this.button_draw.UseVisualStyleBackColor = true;
+            this.button_draw.Click += new System.EventHandler(this.button_draw_Click);
             // 
             // button_clear
             // 
-            this.button_clear.Location = new System.Drawing.Point(457, 12);
+            this.button_clear.Location = new System.Drawing.Point(665, 9);
             this.button_clear.Name = "button_clear";
             this.button_clear.Size = new System.Drawing.Size(75, 23);
             this.button_clear.TabIndex = 3;
@@ -83,7 +93,7 @@
             // 
             // button_help
             // 
-            this.button_help.Location = new System.Drawing.Point(538, 12);
+            this.button_help.Location = new System.Drawing.Point(659, 43);
             this.button_help.Name = "button_help";
             this.button_help.Size = new System.Drawing.Size(75, 23);
             this.button_help.TabIndex = 4;
@@ -93,16 +103,16 @@
             // 
             // pictureBox_draw
             // 
-            this.pictureBox_draw.Location = new System.Drawing.Point(35, 98);
+            this.pictureBox_draw.Location = new System.Drawing.Point(15, 82);
             this.pictureBox_draw.Name = "pictureBox_draw";
-            this.pictureBox_draw.Size = new System.Drawing.Size(604, 236);
+            this.pictureBox_draw.Size = new System.Drawing.Size(745, 320);
             this.pictureBox_draw.TabIndex = 5;
             this.pictureBox_draw.TabStop = false;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(353, 49);
+            this.label2.Location = new System.Drawing.Point(247, 46);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(154, 13);
             this.label2.TabIndex = 6;
@@ -110,14 +120,14 @@
             // 
             // textBox_randNum
             // 
-            this.textBox_randNum.Location = new System.Drawing.Point(513, 43);
+            this.textBox_randNum.Location = new System.Drawing.Point(407, 43);
             this.textBox_randNum.Name = "textBox_randNum";
-            this.textBox_randNum.Size = new System.Drawing.Size(100, 20);
+            this.textBox_randNum.Size = new System.Drawing.Size(59, 20);
             this.textBox_randNum.TabIndex = 7;
             // 
             // button_randGen
             // 
-            this.button_randGen.Location = new System.Drawing.Point(125, 43);
+            this.button_randGen.Location = new System.Drawing.Point(12, 41);
             this.button_randGen.Name = "button_randGen";
             this.button_randGen.Size = new System.Drawing.Size(111, 23);
             this.button_randGen.TabIndex = 9;
@@ -127,7 +137,7 @@
             // 
             // button_randDraw
             // 
-            this.button_randDraw.Location = new System.Drawing.Point(242, 43);
+            this.button_randDraw.Location = new System.Drawing.Point(129, 41);
             this.button_randDraw.Name = "button_randDraw";
             this.button_randDraw.Size = new System.Drawing.Size(112, 23);
             this.button_randDraw.TabIndex = 10;
@@ -138,7 +148,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(401, 72);
+            this.label3.Location = new System.Drawing.Point(472, 47);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(106, 13);
             this.label3.TabIndex = 11;
@@ -147,16 +157,98 @@
             // textBox_randTime
             // 
             this.textBox_randTime.Enabled = false;
-            this.textBox_randTime.Location = new System.Drawing.Point(513, 69);
+            this.textBox_randTime.Location = new System.Drawing.Point(584, 44);
             this.textBox_randTime.Name = "textBox_randTime";
-            this.textBox_randTime.Size = new System.Drawing.Size(100, 20);
+            this.textBox_randTime.Size = new System.Drawing.Size(69, 20);
             this.textBox_randTime.TabIndex = 12;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 14);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(53, 13);
+            this.label4.TabIndex = 13;
+            this.label4.Text = "Point Top";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(71, 13);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(12, 13);
+            this.label5.TabIndex = 14;
+            this.label5.Text = "x";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(149, 13);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(12, 13);
+            this.label6.TabIndex = 15;
+            this.label6.Text = "y";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(227, 14);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(13, 13);
+            this.label7.TabIndex = 16;
+            this.label7.Text = "a";
+            // 
+            // textBox_x
+            // 
+            this.textBox_x.Location = new System.Drawing.Point(89, 10);
+            this.textBox_x.Name = "textBox_x";
+            this.textBox_x.Size = new System.Drawing.Size(54, 20);
+            this.textBox_x.TabIndex = 17;
+            // 
+            // textBox_y
+            // 
+            this.textBox_y.Location = new System.Drawing.Point(167, 10);
+            this.textBox_y.Name = "textBox_y";
+            this.textBox_y.Size = new System.Drawing.Size(54, 20);
+            this.textBox_y.TabIndex = 18;
+            // 
+            // textBox_a
+            // 
+            this.textBox_a.Location = new System.Drawing.Point(246, 10);
+            this.textBox_a.Name = "textBox_a";
+            this.textBox_a.Size = new System.Drawing.Size(54, 20);
+            this.textBox_a.TabIndex = 19;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(306, 13);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(13, 13);
+            this.label8.TabIndex = 20;
+            this.label8.Text = "b";
+            // 
+            // textBox_b
+            // 
+            this.textBox_b.Location = new System.Drawing.Point(325, 10);
+            this.textBox_b.Name = "textBox_b";
+            this.textBox_b.Size = new System.Drawing.Size(54, 20);
+            this.textBox_b.TabIndex = 21;
             // 
             // FormParabol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(674, 423);
+            this.ClientSize = new System.Drawing.Size(772, 423);
+            this.Controls.Add(this.textBox_b);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.textBox_a);
+            this.Controls.Add(this.textBox_y);
+            this.Controls.Add(this.textBox_x);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.textBox_randTime);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.button_randDraw);
@@ -192,5 +284,14 @@
         private System.Windows.Forms.Button button_randDraw;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBox_randTime;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox textBox_x;
+        private System.Windows.Forms.TextBox textBox_y;
+        private System.Windows.Forms.TextBox textBox_a;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox textBox_b;
     }
 }
