@@ -102,10 +102,18 @@ namespace Draw2D
 
         private void button_randGen_Click(object sender, EventArgs e)
         {
+            if (!get_randNum())
+            {
+                return;
+            }
         }
 
         private void button_randDraw_Click(object sender, EventArgs e)
         {
+            if (!get_randNum())
+            {
+                return;
+            }
         }
     }
 }
