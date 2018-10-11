@@ -148,14 +148,14 @@
             // 
             this.comboBox_algo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_algo.FormattingEnabled = true;
-            this.comboBox_algo.Location = new System.Drawing.Point(370, 12);
+            this.comboBox_algo.Location = new System.Drawing.Point(370, 9);
             this.comboBox_algo.Name = "comboBox_algo";
             this.comboBox_algo.Size = new System.Drawing.Size(86, 21);
             this.comboBox_algo.TabIndex = 11;
             // 
             // button_draw
             // 
-            this.button_draw.Location = new System.Drawing.Point(462, 10);
+            this.button_draw.Location = new System.Drawing.Point(462, 8);
             this.button_draw.Name = "button_draw";
             this.button_draw.Size = new System.Drawing.Size(75, 23);
             this.button_draw.TabIndex = 12;
@@ -165,7 +165,7 @@
             // 
             // button_clear
             // 
-            this.button_clear.Location = new System.Drawing.Point(543, 10);
+            this.button_clear.Location = new System.Drawing.Point(543, 8);
             this.button_clear.Name = "button_clear";
             this.button_clear.Size = new System.Drawing.Size(75, 23);
             this.button_clear.TabIndex = 13;
@@ -175,7 +175,7 @@
             // 
             // button_help
             // 
-            this.button_help.Location = new System.Drawing.Point(624, 10);
+            this.button_help.Location = new System.Drawing.Point(624, 8);
             this.button_help.Name = "button_help";
             this.button_help.Size = new System.Drawing.Size(75, 23);
             this.button_help.TabIndex = 14;
@@ -194,7 +194,7 @@
             // 
             // button_randDraw
             // 
-            this.button_randDraw.Location = new System.Drawing.Point(389, 38);
+            this.button_randDraw.Location = new System.Drawing.Point(389, 37);
             this.button_randDraw.Name = "button_randDraw";
             this.button_randDraw.Size = new System.Drawing.Size(105, 23);
             this.button_randDraw.TabIndex = 16;

@@ -32,13 +32,18 @@ namespace Draw2D
 
         public void DDA(Ellipse ellipse, Color color)
         {
-            // calculate y from x, then draw(x, round(y))
+            // calculate y from x, then draw(x, round(y)) or the opposite
             // F(x, y) = x^2/a^2 + y^2/b^2 - 1
             // Dy/Dx = 2x/a^2
             // Dx/Dy = 2y/b^2
-            // x incre faster than y <=> Dy/Dx < Dx/Dy
+            //
+            // x incre faster than y decre <=> Dy/Dx < Dx/Dy
             // <=> 2x/a^2 - 2y/b^2 < 0
             // <=> x * b * b - y * a * a < 0
+            // start from Point(0, b) move along -->>
+            //
+            // y incre faster than x decre
+            // start from Point(a, 0) move along <<--
 
             Point center = ellipse.center;
             int a = ellipse.a;
@@ -49,99 +54,96 @@ namespace Draw2D
             bitmap.SetPixel(center.X + a, center.Y, color);
             bitmap.SetPixel(center.X - a, center.Y, color);
 
+            // x incre faster than y decre
             int x = 1;
             int y = (int)Math.Round(Math.Sqrt(b * b - b * b * x * x / (float)(a * a)));
+            int x_incre = 1;
+            int y_incre = 1;
 
-            // x incre faster than y decre
-            while (x * b * b - y * a * a < 0)
+            while (x * b * b - y * a * a < 0 && x <= a && y >= 0)
             {
                 bitmap.SetPixel(center.X + x, center.Y + y, color);
                 bitmap.SetPixel(center.X + x, center.Y - y, color);
                 bitmap.SetPixel(center.X - x, center.Y + y, color);
                 bitmap.SetPixel(center.X - x, center.Y - y, color);
 
-                ++x;
+                x += x_incre;
                 y = (int)Math.Round(Math.Sqrt(b * b - b * b * x * x / (float)(a * a)));
             }
 
-            // y decre faster than x incre
-            while (x * b * b - y * a * a >= 0 && y >= 0 && x <= a)
+            // y incre faster than x decre
+            y = 1;
+            x = (int)Math.Round(Math.Sqrt(a * a - a * a * y * y / (float)(b * b)));
+
+            while (x * b * b - y * a * a >= 0 && x >= 0 && y <= b)
             {
                 bitmap.SetPixel(center.X + x, center.Y + y, color);
                 bitmap.SetPixel(center.X + x, center.Y - y, color);
                 bitmap.SetPixel(center.X - x, center.Y + y, color);
                 bitmap.SetPixel(center.X - x, center.Y - y, color);
 
-                --y;
+                y += y_incre;
                 x = (int)Math.Round(Math.Sqrt(a * a - a * a * y * y / (float)(b * b)));
             }
         }
 
         public void Bresenham(Ellipse ellipse, Color color)
         {
-        }
-
-        public void MidPoint(Ellipse ellipse, Color color)
-        {
-            // Explain MidPoint algorithm
+            // Explain Bresenham algorithm
+            // draw in 1/4
             // F(x, y) = x^2/a^2 + y^2/b^2 - 1
             //
             // when x incre faster than y decre
-            // F(x_k + 1, y_k - 1/2) = (x_k + 1)^2/a^2 + (y_k - 1/2)^2/b^2 - 1
+            // F(x + 1, y) and F(x + 1, y - 1)
+            // one is positive and one is negative
             //
-            // p_i = 4 * (a^2) * (b^2) * F(x_k + 1, y_k - 1/2)
-            // p_i = 4 * (((x_k + 1)^2) * (b^2) + ((y_k - 1/2)^2) * (a^2) - (a^2) * (b^2))
-            // p_(i+1) = 4 * (((x_k + 2)^2) * (b^2) + ((y_(k+1) - 1/2)^2) * (a^2) - (a^2) * (b^2))
-            // p_(i+1) - p_i = 4 * ((b^2) * 2 (x_k + 1) + b^2 + (a^2) * (y_(k+1)^2 - y_k^2)
-            //                          - (a^2) * (y_(k+1) - y_k))
+            // p_i = a^2 * b^2 * (F(x_k + 1, y_k) + F(x_k + 1, y_k - 1))
+            // p_(i+1) - p_i = 4b^2 * x_(k+1) + 2b^2
+            //                  + 2a^2 * (y_(k+1)^2 - y_k^2)
+            //                  - 2a^2 * (y_(k+1) - y_k)
             //
             // p_i < 0
             //      y_(k+1) = y_k
-            //      p_(i+1) = p_i + (b^2) * 8 * x_(k+1) + 4 * b^2
+            //      p_(i+1) = p_i + 4b^2 * x_(k+1) + 2b^2
             // p_i >= 0
             //      y_(k+1) = y_k - 1
-            //      p_(i+1) = p_i + (b^2) * 8 * x_(k+1) + 4 * b^2 - (a^2) * 8 * y_(k+1)
+            //      p_(i+1) = p_i + 4b^2 * x_(k+1) + 2b^2 - 4a^2 * y_(k+1)
             //
-            // p_0 = 4 * (a^2) * (b^2) * F(x_0 + 1, y_0 - 1/2)
-            // p_0 = 4 * (b^2) - 4 * (a^2) * b + a^2
+            // p_0 is Point(0, b) move along -->>
+            // p_0 = 2b^2 - 2(a^2)b + a^2
             //
-            // when y decre faster than x incre
-            // F(x_k + 1/2, y_k - 1) = (x_k + 1/2)^2/a^2 + (y_k - 1)^2/b^2 - 1
+            // when y incre faster than x decre
+            // F(x, y + 1) and F(x - 1, y + 1)
+            // one is positive and one is negative
             //
-            // p_i = 4 * (a^2) * (b^2) * F(x_k + 1/2, y_k - 1)
-            // p_(i+1) - p_i = 4 * (a^2) * (-2y_k + 3)
-            //                          + 4 * b^2 * (x_(k+1)^2 - x_k^2)
-            //                          + 4 * b^2 * (x_(k+1) - x_k)
-            // p_(i+1) - p_i = 4 * (a^2) * (-2y_(k+1)) + 4 * a^2
-            //                          + 4 * b^2 * (x_(k+1)^2 - x_k^2)
-            //                          + 4 * b^2 * (x_(k+1) - x_k)
+            // p_i = (a^2)(b^2)(F(x_k, y_k + 1) + F(x_k - 1, y_k + 1))
+            // p_(i+1) - p_i = 2b^2 * (x_(k+1)^2 - x_k^2) + 2b^2 * (x_(k+1) - x_k)
+            //                      + 4a^2 * y_(k+1) + 2a^2
             //
             // p_i < 0
-            //      x_(k+1) = x_k + 1
-            //      p_(i+1) = p_i - 8 * (a^2) * y_(k+1) + 4 * a^2 + 8 * (b^2) * x_(k+1)
-            //
-            // p_i >= 0
             //      x_(k+1) = x_k
-            //      p_(i+1) = p_i - 8 * (a^2) * y_(k+1) + 4 * a^2
+            //      p_(i+1) = p_i + 4a^2 * y_(k+1) + 2a^2
+            // p_i >= 0
+            //      x_(k+1) = x_k - 1
+            //      p_(i+1) = p_i + 4a^2 * y_(k+1) + 2a^2 - 4b^2 * x_(k+1)
             //
-            // p_0 is where x * b * b - y * a * a = 0
-            //      xx = a^2/sqrt(a^2 + b^2)
-            //      yy = b^2/sqrt(a^2 + b^2)
-            // p_0 = 4 * (a^2) * (b^2) * F(xx + 1/2, yy - 1)
+            // p_0 is Point(a, 0) move along <<--
+            // p_0 = 2a^2 - 2a(b^2) + b^2
 
             Point center = ellipse.center;
             int a = ellipse.a;
             int b = ellipse.b;
 
+            // x incre faster than y decre
             int x = 0;
             int y = b;
             int x_incre = 1;
             int y_incre = -1;
 
-            int error_step = 4 * b * b - 4 * a * a * b + a * a;
+            // p_0 = 2b^2 - 2(a^2)b + a^2
+            int error_step = 2 * b * b - 2 * a * a * b + a * a;
 
-            // x incre faster than y decre
-            while (x * b * b - y * a * a < 0)
+            while (x * b * b - y * a * a < 0 && x <= a && y >= 0)
             {
                 bitmap.SetPixel(center.X + x, center.Y + y, color);
                 bitmap.SetPixel(center.X + x, center.Y - y, color);
@@ -151,26 +153,26 @@ namespace Draw2D
                 x += x_incre;
                 if (error_step < 0)
                 {
-                    // p_(i+1) = p_i + (b^2) * 8 * x_(k+1) + 4 * b^2
-                    error_step += b * b * 8 * x + 4 * b * b;
+                    // p_(i+1) = p_i + 4 * (b^2) * x_(k+1) + 2b^2
+                    error_step += 4 * b * b * x + 2 * b * b;
                 }
                 else
                 {
                     y += y_incre;
-                    // p_(i+1) = p_i + (b^2) * 8 * x_(k+1) + 4 * b^2 - (a^2) * 8 * y_(k+1)
-                    error_step += b * b * 8 * x + 4 * b * b - a * a * 8 * y;
+                    // p_(i+1) = p_i + 4 * (b^2) * x_(k+1) + 2b^2 - 4a^2 * y_(k+1)
+                    error_step += 4 * b * b * x + 2 * b * b - 4 * a * a * y;
                 }
             }
 
-            // recalculate error_step
-            float xx = (a * a) / (float)Math.Sqrt(a * a + b * b);
-            float yy = (b * b) / (float)Math.Sqrt(a * a + b * b);
-            float pp = 4 * b * b * (xx + 1 / 2) * (xx + 1 / 2) + 4 * a * a * (yy - 1) * (yy - 1)
-                - 4 * a * a * b * b;
-            error_step = (int)pp;
+            // y incre faster than x decre
+            x = a;
+            y = 0;
+            x_incre = -1;
+            y_incre = 1;
 
-            // y decre faster than x incre
-            while (x * b * b - y * a * a >= 0 && y >= 0 && x <= a)
+            // p_0 = 2a^2 - 2a(b^2) + b^2
+            error_step = 2 * a * a - 2 * a * b * b + b * b;
+            while (x * b * b - y * a * a >= 0 && x >= 0 && y <= b)
             {
                 bitmap.SetPixel(center.X + x, center.Y + y, color);
                 bitmap.SetPixel(center.X + x, center.Y - y, color);
@@ -180,14 +182,120 @@ namespace Draw2D
                 y += y_incre;
                 if (error_step < 0)
                 {
-                    x += x_incre;
-                    // p_(i+1) = p_i - 8 * (a^2) * y_(k+1) + 4 * a^2 + 8 * (b^2) * x_(k+1)
-                    error_step += 0 - 8 * a * a * y + 4 * a * a + 8 * b * b * x;
+                    // p_(i+1) = p_i + 4a^2 * y_(k+1) + 2a^2
+                    error_step += 4 * a * a * y + 2 * a * a;
                 }
                 else
                 {
-                    // p_(i+1) = p_i - 8 * (a^2) * y_(k+1) + 4 * a^2
-                    error_step += 0 - 8 * a * a * y + 4 * a * a;
+                    x += x_incre;
+                    // p_(i+1) = p_i + 4a^2 * y_(k+1) + 2a^2 - 4b^2 * x_(k+1)
+                    error_step += 4 * a * a * y + 2 * a * a - 4 * b * b * x;
+                }
+            }
+        }
+
+        public void MidPoint(Ellipse ellipse, Color color)
+        {
+            // Explain MidPoint algorithm
+            // draw in 1/4
+            // F(x, y) = x^2/a^2 + y^2/b^2 - 1
+            //
+            // when x incre faster than y decre
+            // F(x_k + 1, y_k - 1/2) = (x_k + 1)^2/a^2 + (y_k - 1/2)^2/b^2 - 1
+            //
+            // p_i = 4(a^2)(b^2) * F(x_k + 1, y_k - 1/2)
+            // p_(i+1) - p_i = 8b^2 * x_(k+1) + 4b^2
+            //                  + 4a^2(y_(k+1)^2 - y_k^2) - 4a^2(y_(k+1) - y_k)
+            //
+            // p_i < 0
+            //      y_(k+1) = y_k
+            //      p_(i+1) = p_i + 8b^2 * x_(k+1) + 4b^2
+            // p_i >= 0
+            //      y_(k+1) = y_k - 1
+            //      p_(i+1) = p_i + 8b^2 * x_(k+1) + 4b^2 - 8a^2 * y_(k+1)
+            //
+            // p_0 is Point(0, b) move along -->>
+            // p_0 = 4b^2 - 4(a^2)b + a^2
+            //
+            // when y incre faster than x decre
+            // F(x_k - 1/2, y_k + 1) = (x_k - 1/2)^2/a^2 + (y_k + 1)^2/b^2 - 1
+            //
+            // p_i = 4(a^2)(b^2) * F(x_k - 1/2, y_k + 1)
+            // p_(i+1) - p_i = 8a^2 * y_(k+1) + 4a^2
+            //                  + 4b^2(x_(k+1)^2 - x_k^2) - 4b^2(x_(k+1) - x_k)
+            //
+            // p_i < 0
+            //      x_(k+1) = x_k
+            //      p_(i+1) = p_i + 8a^2 * y_(k+1) + 4a^2
+            //
+            // p_i >= 0
+            //      x_(k+1) = x_k - 1
+            //      p_(i+1) = p_i + 8a^2 * y_(k+1) + 4a^2 - 8b^2 * x_(k+1)
+            //
+            // p_0 is Point(a, 0) move along <<--
+            // p_0 = 4a^2 - 4a(b^2) + b^2
+
+            Point center = ellipse.center;
+            int a = ellipse.a;
+            int b = ellipse.b;
+
+            // x incre faster than y decre
+            int x = 0;
+            int y = b;
+            int x_incre = 1;
+            int y_incre = -1;
+
+            // p_0 = 4b^2 - 4(a^2)b + a^2
+            int error_step = 4 * b * b - 4 * a * a * b + a * a;
+
+            while (x * b * b - y * a * a < 0 && x <= a && y >= 0)
+            {
+                bitmap.SetPixel(center.X + x, center.Y + y, color);
+                bitmap.SetPixel(center.X + x, center.Y - y, color);
+                bitmap.SetPixel(center.X - x, center.Y + y, color);
+                bitmap.SetPixel(center.X - x, center.Y - y, color);
+
+                x += x_incre;
+                if (error_step < 0)
+                {
+                    // p_(i+1) = p_i + 8b^2 * x_(k+1) + 4b^2
+                    error_step += 8 * b * b * x + 4 * b * b;
+                }
+                else
+                {
+                    y += y_incre;
+                    // p_(i+1) = p_i + 8b^2 * x_(k+1) + 4b^2 - 8a^2 * y_(k+1)
+                    error_step += 8 * b * b * x + 4 * b * b - 8 * a * a * y;
+                }
+            }
+
+            // y decre faster than x incre
+            x = a;
+            y = 0;
+            x_incre = -1;
+            y_incre = 1;
+
+            // p_0 = 4a^2 - 4a(b^2) + b^2
+            error_step = 4 * a * a - 4 * a * b * b + b * b;
+
+            while (x * b * b - y * a * a >= 0 && x >= 0 && y <= b)
+            {
+                bitmap.SetPixel(center.X + x, center.Y + y, color);
+                bitmap.SetPixel(center.X + x, center.Y - y, color);
+                bitmap.SetPixel(center.X - x, center.Y + y, color);
+                bitmap.SetPixel(center.X - x, center.Y - y, color);
+
+                y += y_incre;
+                if (error_step < 0)
+                {
+                    // p_(i+1) = p_i + 8a^2 * y_(k+1) + 4a^2
+                    error_step += 8 * a * a * y + 4 * a * a;
+                }
+                else
+                {
+                    x += x_incre;
+                    // p_(i+1) = p_i + 8a^2 * y_(k+1) + 4a^2 - 8b^2 * x_(k+1)
+                    error_step += 8 * a * a * y + 4 * a * a - 8 * b * b * x;
                 }
             }
         }

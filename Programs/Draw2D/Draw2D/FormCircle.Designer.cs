@@ -120,14 +120,14 @@
             // 
             this.comboBox_algo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_algo.FormattingEnabled = true;
-            this.comboBox_algo.Location = new System.Drawing.Point(442, 12);
+            this.comboBox_algo.Location = new System.Drawing.Point(442, 10);
             this.comboBox_algo.Name = "comboBox_algo";
             this.comboBox_algo.Size = new System.Drawing.Size(121, 21);
             this.comboBox_algo.TabIndex = 8;
             // 
             // button_draw
             // 
-            this.button_draw.Location = new System.Drawing.Point(569, 12);
+            this.button_draw.Location = new System.Drawing.Point(569, 9);
             this.button_draw.Name = "button_draw";
             this.button_draw.Size = new System.Drawing.Size(75, 23);
             this.button_draw.TabIndex = 9;
@@ -137,7 +137,7 @@
             // 
             // button_clear
             // 
-            this.button_clear.Location = new System.Drawing.Point(650, 42);
+            this.button_clear.Location = new System.Drawing.Point(650, 41);
             this.button_clear.Name = "button_clear";
             this.button_clear.Size = new System.Drawing.Size(75, 23);
             this.button_clear.TabIndex = 10;
@@ -198,7 +198,7 @@
             // 
             // button_help
             // 
-            this.button_help.Location = new System.Drawing.Point(650, 12);
+            this.button_help.Location = new System.Drawing.Point(650, 9);
             this.button_help.Name = "button_help";
             this.button_help.Size = new System.Drawing.Size(75, 23);
             this.button_help.TabIndex = 17;
