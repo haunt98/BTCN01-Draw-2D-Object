@@ -99,7 +99,7 @@ namespace Draw2D
         private Boolean pointInside(Point p)
         {
             if (p.X < 0 || p.Y < 0 ||
-                p.X > bitmap.Width || p.Y > bitmap.Height)
+                p.X >= bitmap.Width || p.Y >= bitmap.Height)
                 return false;
             return true;
         }

@@ -223,6 +223,9 @@ namespace Draw2D
             {
                 drawHyperbol.MidPoint(hyperbol, Color.Blue);
             }
+
+            // refresh picture box every draw
+            pictureBox_draw.Refresh();
         }
 
         private bool get_hyperbol()
@@ -251,9 +254,11 @@ namespace Draw2D
                     "Error");
                 return false;
             }
-            if (x < 0 || x > bitmap.Width ||
-                y < 0 || y > bitmap.Width ||
-                a <= 0 || b <= 0)
+            if (x < 0 || x >= bitmap.Width ||
+                y < 0 || y >= bitmap.Width ||
+                a <= 0 || b <= 0 ||
+                x - a < 0 ||
+                x + a >= bitmap.Width)
             {
                 MessageBox.Show("Wrong format" + Environment.NewLine +
                     "x, y, x - a must be non negative integer" + Environment.NewLine +

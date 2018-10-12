@@ -94,10 +94,10 @@ namespace Draw2D
 
             if (center.X < 0 || center.Y < 0 || R < 0 ||
                 center.X - R < 0 || center.Y - R < 0 ||
-                center.X > bitmap.Width ||
-                center.X + R > bitmap.Width ||
-                center.Y > bitmap.Height ||
-                center.Y + R > bitmap.Height)
+                center.X >= bitmap.Width ||
+                center.X + R >= bitmap.Width ||
+                center.Y >= bitmap.Height ||
+                center.Y + R >= bitmap.Height)
             {
                 return false;
             }

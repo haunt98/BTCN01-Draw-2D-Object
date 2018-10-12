@@ -134,10 +134,10 @@ namespace Draw2D
             Point center = ellipse.center;
             int a = ellipse.a;
             int b = ellipse.b;
-            if (center.X < 0 || center.X > bitmap.Width ||
-                center.Y < 0 || center.Y > bitmap.Height ||
-                a <= 0 || center.X - a < 0 || center.X + a > bitmap.Width ||
-                b <= 0 || center.Y - b < 0 || center.Y + b > bitmap.Height)
+            if (center.X < 0 || center.X >= bitmap.Width ||
+                center.Y < 0 || center.Y >= bitmap.Height ||
+                a <= 0 || center.X - a < 0 || center.X + a >= bitmap.Width ||
+                b <= 0 || center.Y - b < 0 || center.Y + b >= bitmap.Height)
                 return false;
             return true;
         }

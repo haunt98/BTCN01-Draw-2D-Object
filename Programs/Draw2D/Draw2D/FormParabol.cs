@@ -236,8 +236,8 @@ namespace Draw2D
                     "Error");
                 return false;
             }
-            if (x < 0 || x > bitmap.Width ||
-                y < 0 || y > bitmap.Width ||
+            if (x < 0 || x >= bitmap.Width ||
+                y < 0 || y >= bitmap.Width ||
                 a <= 0 || b <= 0)
             {
                 MessageBox.Show("Wrong format" + Environment.NewLine +
