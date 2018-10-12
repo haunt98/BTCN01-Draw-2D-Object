@@ -82,7 +82,7 @@
             // 
             // button_clear
             // 
-            this.button_clear.Location = new System.Drawing.Point(565, 17);
+            this.button_clear.Location = new System.Drawing.Point(556, 14);
             this.button_clear.Name = "button_clear";
             this.button_clear.Size = new System.Drawing.Size(75, 23);
             this.button_clear.TabIndex = 3;
@@ -92,7 +92,7 @@
             // 
             // button_help
             // 
-            this.button_help.Location = new System.Drawing.Point(665, 17);
+            this.button_help.Location = new System.Drawing.Point(637, 14);
             this.button_help.Name = "button_help";
             this.button_help.Size = new System.Drawing.Size(75, 23);
             this.button_help.TabIndex = 4;
@@ -102,7 +102,7 @@
             // 
             // button_randGen
             // 
-            this.button_randGen.Location = new System.Drawing.Point(243, 51);
+            this.button_randGen.Location = new System.Drawing.Point(231, 48);
             this.button_randGen.Name = "button_randGen";
             this.button_randGen.Size = new System.Drawing.Size(109, 23);
             this.button_randGen.TabIndex = 5;
@@ -112,7 +112,7 @@
             // 
             // button_randDraw
             // 
-            this.button_randDraw.Location = new System.Drawing.Point(358, 51);
+            this.button_randDraw.Location = new System.Drawing.Point(346, 48);
             this.button_randDraw.Name = "button_randDraw";
             this.button_randDraw.Size = new System.Drawing.Size(87, 23);
             this.button_randDraw.TabIndex = 6;
@@ -123,7 +123,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(466, 56);
+            this.label2.Location = new System.Drawing.Point(450, 53);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(154, 13);
             this.label2.TabIndex = 7;
@@ -131,7 +131,7 @@
             // 
             // textBox_randNum
             // 
-            this.textBox_randNum.Location = new System.Drawing.Point(621, 53);
+            this.textBox_randNum.Location = new System.Drawing.Point(612, 48);
             this.textBox_randNum.Name = "textBox_randNum";
             this.textBox_randNum.Size = new System.Drawing.Size(100, 20);
             this.textBox_randNum.TabIndex = 8;
@@ -139,7 +139,7 @@
             // textBox_randTime
             // 
             this.textBox_randTime.Enabled = false;
-            this.textBox_randTime.Location = new System.Drawing.Point(621, 84);
+            this.textBox_randTime.Location = new System.Drawing.Point(612, 77);
             this.textBox_randTime.Name = "textBox_randTime";
             this.textBox_randTime.Size = new System.Drawing.Size(100, 20);
             this.textBox_randTime.TabIndex = 9;
@@ -147,7 +147,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(509, 87);
+            this.label3.Location = new System.Drawing.Point(498, 80);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(106, 13);
             this.label3.TabIndex = 10;
@@ -155,9 +155,9 @@
             // 
             // pictureBox_draw
             // 
-            this.pictureBox_draw.Location = new System.Drawing.Point(41, 137);
+            this.pictureBox_draw.Location = new System.Drawing.Point(15, 118);
             this.pictureBox_draw.Name = "pictureBox_draw";
-            this.pictureBox_draw.Size = new System.Drawing.Size(699, 309);
+            this.pictureBox_draw.Size = new System.Drawing.Size(697, 363);
             this.pictureBox_draw.TabIndex = 11;
             this.pictureBox_draw.TabStop = false;
             // 
@@ -238,7 +238,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(780, 493);
+            this.ClientSize = new System.Drawing.Size(736, 493);
             this.Controls.Add(this.textBox_b);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.textBox_a);
