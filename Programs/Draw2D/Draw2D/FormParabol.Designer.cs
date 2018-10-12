@@ -105,7 +105,7 @@
             // 
             this.pictureBox_draw.Location = new System.Drawing.Point(15, 82);
             this.pictureBox_draw.Name = "pictureBox_draw";
-            this.pictureBox_draw.Size = new System.Drawing.Size(745, 320);
+            this.pictureBox_draw.Size = new System.Drawing.Size(745, 392);
             this.pictureBox_draw.TabIndex = 5;
             this.pictureBox_draw.TabStop = false;
             // 
@@ -239,7 +239,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(772, 423);
+            this.ClientSize = new System.Drawing.Size(772, 486);
             this.Controls.Add(this.textBox_b);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.textBox_a);

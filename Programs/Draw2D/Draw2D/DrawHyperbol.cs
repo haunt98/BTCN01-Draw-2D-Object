@@ -51,28 +51,35 @@ namespace Draw2D
             int x_incre = 1;
             int y_incre = 1;
 
-            while (x * b * b - y * a * a > 0 && x < center.X && x < bitmap.Width - center.X &&
-                    y < center.Y && y < bitmap.Height - center.Y)
+            while (x * b * b - y * a * a > 0 && x >= 0 && x < bitmap.Width &&
+                y >= 0 && y < bitmap.Height)
             {
-                bitmap.SetPixel(center.X + x, center.Y + y, color);
-                bitmap.SetPixel(center.X + x, center.Y - y, color);
-                bitmap.SetPixel(center.X - x, center.Y + y, color);
-                bitmap.SetPixel(center.X - x, center.Y - y, color);
+                if (x < bitmap.Width - center.X && y < bitmap.Height - center.Y)
+                    bitmap.SetPixel(center.X + x, center.Y + y, color);
+                if (x < bitmap.Width - center.X && y < center.Y)
+                    bitmap.SetPixel(center.X + x, center.Y - y, color);
+                if (x < center.X && y < bitmap.Height - center.Y)
+                    bitmap.SetPixel(center.X - x, center.Y + y, color);
+                if (x < center.X && y < center.Y)
+                    bitmap.SetPixel(center.X - x, center.Y - y, color);
 
                 y += y_incre;
                 x = (int)Math.Round(Math.Sqrt(a * a * (y * y + b * b) / (float)(b * b)));
             }
 
             // x incre faster than y incre
-            y = (int)Math.Round(Math.Sqrt(b * b * (x * x - a * a) / (float)(a * a)));
 
-            while (x * b * b - y * a * a <= 0 && x < center.X && x < bitmap.Width - center.X &&
-                    y < center.Y && y < bitmap.Height - center.Y)
+            while (x * b * b - y * a * a <= 0 && x >= 0 && x < bitmap.Width &&
+                 y >= 0 && y < bitmap.Height)
             {
-                bitmap.SetPixel(center.X + x, center.Y + y, color);
-                bitmap.SetPixel(center.X + x, center.Y - y, color);
-                bitmap.SetPixel(center.X - x, center.Y + y, color);
-                bitmap.SetPixel(center.X - x, center.Y - y, color);
+                if (x < bitmap.Width - center.X && y < bitmap.Height - center.Y)
+                    bitmap.SetPixel(center.X + x, center.Y + y, color);
+                if (x < bitmap.Width - center.X && y < center.Y)
+                    bitmap.SetPixel(center.X + x, center.Y - y, color);
+                if (x < center.X && y < bitmap.Height - center.Y)
+                    bitmap.SetPixel(center.X - x, center.Y + y, color);
+                if (x < center.X && y < center.Y)
+                    bitmap.SetPixel(center.X - x, center.Y - y, color);
 
                 x += x_incre;
                 y = (int)Math.Round(Math.Sqrt(b * b * (x * x - a * a) / (float)(a * a)));

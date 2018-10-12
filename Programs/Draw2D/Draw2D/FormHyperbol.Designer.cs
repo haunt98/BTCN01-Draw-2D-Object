@@ -63,6 +63,7 @@
             // 
             // comboBox_algo
             // 
+            this.comboBox_algo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_algo.FormattingEnabled = true;
             this.comboBox_algo.Location = new System.Drawing.Point(337, 14);
             this.comboBox_algo.Name = "comboBox_algo";
