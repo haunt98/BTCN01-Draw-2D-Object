@@ -74,7 +74,7 @@ namespace Draw2D
             {
                 MessageBox.Show("Wrong format!" + Environment.NewLine +
                     "x1, y1, x2, y2 must be positive integer" + Environment.NewLine +
-                    "x1, x2 must be less or equal than " + bitmap.Width.ToString() + Environment.NewLine +
+                    "x1, x2 must be less than " + bitmap.Width.ToString() + Environment.NewLine +
                     "y1, y2 must be less or qual than " + bitmap.Height.ToString() + Environment.NewLine,
                     "Error");
                 return false;
@@ -87,8 +87,8 @@ namespace Draw2D
             {
                 MessageBox.Show("x1, y1, x2, y2 is too big" + Environment.NewLine +
                     "x1, y1, x2, y2 must be positive integer" + Environment.NewLine +
-                    "x1, x2 must be less or equal than " + bitmap.Width.ToString() + Environment.NewLine +
-                    "y1, y2 must be less or qual than " + bitmap.Height.ToString() + Environment.NewLine,
+                    "x1, x2 must be less than " + bitmap.Width.ToString() + Environment.NewLine +
+                    "y1, y2 must be less than " + bitmap.Height.ToString() + Environment.NewLine,
                     "Error");
                 return false;
             }
@@ -149,11 +149,12 @@ namespace Draw2D
 
         private void button_help_click(object sender, EventArgs e)
         {
-            MessageBox.Show("x1, y1 is cordinate of Point p1" + Environment.NewLine +
+            MessageBox.Show("Input:" + Environment.NewLine +
+                "x1, y1 is cordinate of Point p1" + Environment.NewLine +
                 "x2, y2 is cordinate of Point p2" + Environment.NewLine +
                 "x1, y1, x2, y2 must be positive integer" + Environment.NewLine +
-                "x1, x2 must be less or equal than " + bitmap.Width.ToString() + Environment.NewLine +
-                "y1, y2 must be less or qual than " + bitmap.Height.ToString() + Environment.NewLine +
+                "x1, x2 must be less than " + bitmap.Width.ToString() + Environment.NewLine +
+                "y1, y2 must be less than " + bitmap.Height.ToString() + Environment.NewLine +
                 Environment.NewLine +
                 "You choose an algorithm (DDA, Bresenham, MidPoint, Xiaolin Wu)," + Environment.NewLine +
                 "then press \"Draw Line\" button to draw a line from p1 to p2" + Environment.NewLine +

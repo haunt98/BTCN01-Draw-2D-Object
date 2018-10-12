@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="DrawCircle.cs" />
     <Compile Include="DrawEllipse.cs" />
+    <Compile Include="DrawHyperbol.cs" />
     <Compile Include="DrawLine.cs" />
     <Compile Include="DrawParabol.cs" />
     <Compile Include="FormCircle.cs">

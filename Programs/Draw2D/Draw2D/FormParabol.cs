@@ -75,11 +75,21 @@ namespace Draw2D
         {
             MessageBox.Show("Equation Y = (a/b) * X^2" + Environment.NewLine +
                 Environment.NewLine +
-                "Input" + Environment.NewLine +
+                "Input:" + Environment.NewLine +
                 "x, y must be non negative integer" + Environment.NewLine +
                 "a, b must be positive integer" + Environment.NewLine +
-                "x must be less or equal than " + bitmap.Width + Environment.NewLine +
-                "y must be less or equal than " + bitmap.Height + Environment.NewLine,
+                "x must be less than " + bitmap.Width + Environment.NewLine +
+                "y must be less than " + bitmap.Height + Environment.NewLine +
+                Environment.NewLine +
+                "You choose an algorithm (DDA, Bresenham, MidPoint)," + Environment.NewLine +
+                "then press \"Draw Parabol\" button to draw an parabol frrom point center and radius" + Environment.NewLine +
+                "You can clear all drawings when you press \"Clear All\" button" + Environment.NewLine +
+                Environment.NewLine +
+                "If you want to draw random parabol, input the number of parabols you want to draw, then press \"Draw Random\"" + Environment.NewLine +
+                "First time press \"Draw Random\", the program automatically random generate a random list parabol" + Environment.NewLine +
+                "Next time you press it, the program will use already-have random list parabol to draw" + Environment.NewLine +
+                "To have new random list parabol, press \"Random Generate\"" + Environment.NewLine +
+                "After drawing, the program will output the time it took to draw",
                 "Help");
         }
 
@@ -221,8 +231,8 @@ namespace Draw2D
                 MessageBox.Show("Wrong format" + Environment.NewLine +
                     "x, y must be non negative integer" + Environment.NewLine +
                     "a, b must be positive integer" + Environment.NewLine +
-                    "x must be less or equal than " + bitmap.Width + Environment.NewLine +
-                    "y must be less or equal than " + bitmap.Height + Environment.NewLine,
+                    "x must be less than " + bitmap.Width + Environment.NewLine +
+                    "y must be less than " + bitmap.Height + Environment.NewLine,
                     "Error");
                 return false;
             }
@@ -233,8 +243,8 @@ namespace Draw2D
                 MessageBox.Show("Wrong format" + Environment.NewLine +
                     "x, y must be non negative integer" + Environment.NewLine +
                     "a, b must be positive integer" + Environment.NewLine +
-                    "x must be less or equal than " + bitmap.Width + Environment.NewLine +
-                    "y must be less or equal than " + bitmap.Height + Environment.NewLine,
+                    "x must be less than " + bitmap.Width + Environment.NewLine +
+                    "y must be less than " + bitmap.Height + Environment.NewLine,
                     "Error");
                 return false;
             }

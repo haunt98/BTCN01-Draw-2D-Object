@@ -48,18 +48,14 @@ namespace Draw2D
             int a = ellipse.a;
             int b = ellipse.b;
 
-            bitmap.SetPixel(center.X, center.Y + b, color);
-            bitmap.SetPixel(center.X, center.Y - b, color);
-            bitmap.SetPixel(center.X + a, center.Y, color);
-            bitmap.SetPixel(center.X - a, center.Y, color);
-
             // x incre faster than y decre
-            int x = 1;
+            int x = 0;
             int y = (int)Math.Round(Math.Sqrt(b * b - b * b * x * x / (float)(a * a)));
             int x_incre = 1;
             int y_incre = 1;
 
-            while (x * b * b - y * a * a < 0 && x < a && y >= 0)
+            while (x * b * b - y * a * a < 0 && x <= a && x < bitmap.Width - center.X && x < center.X
+                && y >= 0 && y < bitmap.Height - center.Y && y < center.Y)
             {
                 bitmap.SetPixel(center.X + x, center.Y + y, color);
                 bitmap.SetPixel(center.X + x, center.Y - y, color);
@@ -71,10 +67,11 @@ namespace Draw2D
             }
 
             // y incre faster than x decre
-            y = 1;
+            y = 0;
             x = (int)Math.Round(Math.Sqrt(a * a - a * a * y * y / (float)(b * b)));
 
-            while (x * b * b - y * a * a >= 0 && x >= 0 && y < b)
+            while (x * b * b - y * a * a >= 0 && x >= 0 && x < bitmap.Width - center.X && x < center.X
+                && y <= b && y < bitmap.Height - center.Y && y < center.Y)
             {
                 bitmap.SetPixel(center.X + x, center.Y + y, color);
                 bitmap.SetPixel(center.X + x, center.Y - y, color);
@@ -142,7 +139,8 @@ namespace Draw2D
             // p_0 = 2b^2 - 2(a^2)b + a^2
             int error_step = 2 * b * b - 2 * a * a * b + a * a;
 
-            while (x * b * b - y * a * a < 0 && x < a && y >= 0)
+            while (x * b * b - y * a * a < 0 && x <= a && x < bitmap.Width - center.X && x < center.X
+                && y >= 0 && y < bitmap.Height - center.Y && y < center.Y)
             {
                 bitmap.SetPixel(center.X + x, center.Y + y, color);
                 bitmap.SetPixel(center.X + x, center.Y - y, color);
@@ -171,7 +169,9 @@ namespace Draw2D
 
             // p_0 = 2a^2 - 2a(b^2) + b^2
             error_step = 2 * a * a - 2 * a * b * b + b * b;
-            while (x * b * b - y * a * a >= 0 && x >= 0 && y < b)
+
+            while (x * b * b - y * a * a >= 0 && x >= 0 && x < bitmap.Width - center.X && x < center.X
+                && y <= b && y < bitmap.Height - center.Y && y < center.Y)
             {
                 bitmap.SetPixel(center.X + x, center.Y + y, color);
                 bitmap.SetPixel(center.X + x, center.Y - y, color);
@@ -247,7 +247,8 @@ namespace Draw2D
             // p_0 = 4b^2 - 4(a^2)b + a^2
             int error_step = 4 * b * b - 4 * a * a * b + a * a;
 
-            while (x * b * b - y * a * a < 0 && x <= a && y >= 0)
+            while (x * b * b - y * a * a < 0 && x <= a && x < bitmap.Width - center.X && x < center.X
+                && y >= 0 && y < bitmap.Height - center.Y && y < center.Y)
             {
                 bitmap.SetPixel(center.X + x, center.Y + y, color);
                 bitmap.SetPixel(center.X + x, center.Y - y, color);
@@ -277,7 +278,8 @@ namespace Draw2D
             // p_0 = 4a^2 - 4a(b^2) + b^2
             error_step = 4 * a * a - 4 * a * b * b + b * b;
 
-            while (x * b * b - y * a * a >= 0 && x >= 0 && y <= b)
+            while (x * b * b - y * a * a >= 0 && x >= 0 && x < bitmap.Width - center.X && x < center.X
+                && y <= b && y < bitmap.Height - center.Y && y < center.Y)
             {
                 bitmap.SetPixel(center.X + x, center.Y + y, color);
                 bitmap.SetPixel(center.X + x, center.Y - y, color);

@@ -108,8 +108,8 @@ namespace Draw2D
                 MessageBox.Show("Wrong format" + Environment.NewLine +
                     "x, y must be non negative integer" + Environment.NewLine +
                     "a, b, x - a, y - b must be positive integer" + Environment.NewLine +
-                    "x, x + a must be less or equal than " + bitmap.Width + Environment.NewLine +
-                    "y, y + b must be less or equal than " + bitmap.Height + Environment.NewLine,
+                    "x, x + a must be less than " + bitmap.Width + Environment.NewLine +
+                    "y, y + b must be less than " + bitmap.Height + Environment.NewLine,
                     "Error");
                 return false;
             }
@@ -120,8 +120,8 @@ namespace Draw2D
                 MessageBox.Show("x, y, a, b value is not suitable" + Environment.NewLine +
                     "x, y must be non negative integer" + Environment.NewLine +
                     "a, b, x - a, y - b must be positive integer" + Environment.NewLine +
-                    "x, x + a must be less or equal than " + bitmap.Width + Environment.NewLine +
-                    "y, y + b must be less or equal than " + bitmap.Height + Environment.NewLine,
+                    "x, x + a must be less than " + bitmap.Width + Environment.NewLine +
+                    "y, y + b must be less than " + bitmap.Height + Environment.NewLine,
                     "Error");
                 return false;
             }
@@ -167,10 +167,21 @@ namespace Draw2D
                 int y = random.Next(bitmap.Height);
                 // a <= x and a <= bitmap.Width - x
                 int max_a = x < bitmap.Width - x ? x : bitmap.Width - x;
-                int a = random.Next(max_a);
+                // max_a can be 0
+                if (max_a == 0)
+                {
+                    --i;
+                    continue;
+                }
+                int a = random.Next(1, max_a);
                 // b <= y and b <= bitmap.Height - y
                 int max_b = y < bitmap.Height - y ? y : bitmap.Height - y;
-                int b = random.Next(max_b);
+                if (max_b == 0)
+                {
+                    --i;
+                    continue;
+                }
+                int b = random.Next(1, max_b);
                 ellipseS.Add(new Ellipse(new Point(x, y), a, b));
             }
         }
@@ -266,8 +277,8 @@ namespace Draw2D
                 "a, b is radius of ellipse" + Environment.NewLine +
                 "x, y must be non negative integer" + Environment.NewLine +
                 "a, b, x - a, y - b must be positive integer" + Environment.NewLine +
-                "x, x + a must be less or equal than " + bitmap.Width + Environment.NewLine +
-                "y, y + b must be less or equal than " + bitmap.Height + Environment.NewLine +
+                "x, x + a must be less than " + bitmap.Width + Environment.NewLine +
+                "y, y + b must be less than " + bitmap.Height + Environment.NewLine +
                 Environment.NewLine +
                 "You choose an algorithm (DDA, Bresenham, MidPoint)," + Environment.NewLine +
                 "then press \"Draw Ellipse\" button to draw an ellipse frrom point center and radius" + Environment.NewLine +

@@ -67,8 +67,8 @@ namespace Draw2D
             {
                 MessageBox.Show("Wrong format" + Environment.NewLine +
                     "x, y, R, x - R, y - R must be positive integer" + Environment.NewLine +
-                    "x, x + R must be less or equal than " + bitmap.Width + Environment.NewLine +
-                    "y, y + R must be less or equal than " + bitmap.Height + Environment.NewLine,
+                    "x, x + R must be less than " + bitmap.Width + Environment.NewLine +
+                    "y, y + R must be less than " + bitmap.Height + Environment.NewLine,
                     "Error");
                 return false;
             }
@@ -78,8 +78,8 @@ namespace Draw2D
             {
                 MessageBox.Show("x, y, R value is not suitable" + Environment.NewLine +
                     "x, y, R, x - R, y - R must be positive integer" + Environment.NewLine +
-                    "x, x + R must be less or equal than " + bitmap.Width + Environment.NewLine +
-                    "y, y + R must be less or equal than " + bitmap.Height + Environment.NewLine,
+                    "x, x + R must be less than " + bitmap.Width + Environment.NewLine +
+                    "y, y + R must be less than " + bitmap.Height + Environment.NewLine,
                     "Error");
                 return false;
             }
@@ -253,8 +253,8 @@ namespace Draw2D
                 "x, y is cordinate of center point of circle" + Environment.NewLine +
                 "R is radius of circle" + Environment.NewLine +
                 "x, y, R, x - R, y - R must be positive integer" + Environment.NewLine +
-                "x, x + R must be less or equal than " + bitmap.Width + Environment.NewLine +
-                "y, y + R must be less or equal than " + bitmap.Height + Environment.NewLine +
+                "x, x + R must be less than " + bitmap.Width + Environment.NewLine +
+                "y, y + R must be less than " + bitmap.Height + Environment.NewLine +
                 Environment.NewLine +
                 "You choose an algorithm (DDA, Bresenham, MidPoint)," + Environment.NewLine +
                 "then press \"Draw Circle\" button to draw a circle frrom point center and radius" + Environment.NewLine +
