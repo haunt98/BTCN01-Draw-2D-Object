@@ -159,7 +159,7 @@
             // 
             this.pictureBox_draw.Location = new System.Drawing.Point(12, 64);
             this.pictureBox_draw.Name = "pictureBox_draw";
-            this.pictureBox_draw.Size = new System.Drawing.Size(800, 270);
+            this.pictureBox_draw.Size = new System.Drawing.Size(800, 375);
             this.pictureBox_draw.TabIndex = 12;
             this.pictureBox_draw.TabStop = false;
             // 
@@ -236,7 +236,7 @@
             // 
             // button_randGen
             // 
-            this.button_randGen.Location = new System.Drawing.Point(216, 34);
+            this.button_randGen.Location = new System.Drawing.Point(216, 35);
             this.button_randGen.Name = "button_randGen";
             this.button_randGen.Size = new System.Drawing.Size(103, 23);
             this.button_randGen.TabIndex = 21;
@@ -248,7 +248,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(836, 346);
+            this.ClientSize = new System.Drawing.Size(836, 451);
             this.Controls.Add(this.button_randGen);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.textBox_randLineTime);

@@ -291,8 +291,8 @@ namespace Draw2D
         // Use the idea from the code in following links
         // https://en.wikipedia.org/wiki/Xiaolin_Wu%27s_line_algorithm
         // https://www.geeksforgeeks.org/anti-aliased-line-xiaolin-wus-algorithm/
-        // TODO find a way to setPixel with float color
-        public void XiaolinWu(Line line2D)
+        // https://rosettacode.org/wiki/Xiaolin_Wu%27s_line_algorithm#C.23
+        public void XiaolinWu(Line line2D, Color color)
         {
             Point p1 = line2D.p1;
             Point p2 = line2D.p2;
@@ -304,7 +304,7 @@ namespace Draw2D
             Point p2_copy = new Point(p2.X, p2.Y);
 
             // check if slope m > 1
-            // or draw from p2 to p1
+            // or need to draw from p2 to p1
             if (isDyLargeThanDx)
             {
                 // x <--> y
@@ -328,30 +328,79 @@ namespace Draw2D
 
             int Dx = p2_copy.X - p1_copy.X;
             int Dy = p2_copy.Y - p1_copy.Y;
-            float slopeOrGradient = Dx == 0 ? 1 : (float)Dy / Dx;
 
-            // point p1
-            int x_end = roundXW(p1_copy.X);
-            float y_end = p1_copy.Y + slopeOrGradient * (x_end - p1_copy.X);
-            float x_gap = rf_partXW(p1_copy.X + (float)0.5);
-            int x_from = x_end;
-            int y_from = i_partXW(y_end);
+            // to change the brightness for antialias
+            float gradient = Dx == 0 ? 1 : (float)Dy / Dx;
+
+            int x_from = p1_copy.X;
+            int x_end = p2_copy.X;
+            float y_gradient = p1_copy.Y;
+
             if (isDyLargeThanDx)
             {
+                for (int x = x_from; x <= x_end; ++x)
+                {
+                    if (i_partXW(y_gradient) >= 0 && i_partXW(y_gradient) < bitmap.Width &&
+                        x >= 0 && x < bitmap.Height)
+                    {
+                        int alpha = (int)Math.Round(rf_partXW(y_gradient) * 255);
+                        if (alpha < 0)
+                            alpha = 0;
+                        else if (alpha > 255)
+                            alpha = 255;
+
+                        bitmap.SetPixel(i_partXW(y_gradient), x,
+                            Color.FromArgb(alpha, color));
+                    }
+                    if (i_partXW(y_gradient) >= 1 && i_partXW(y_gradient) < bitmap.Width &&
+                        x >= 0 && x < bitmap.Height)
+                    {
+                        int alpha = (int)Math.Round(f_partXW(y_gradient) * 255);
+                        if (alpha < 0)
+                            alpha = 0;
+                        else if (alpha > 255)
+                            alpha = 255;
+
+                        bitmap.SetPixel(i_partXW(y_gradient) - 1, x,
+                            Color.FromArgb(alpha, color));
+                    }
+                    y_gradient += gradient;
+                }
             }
             else
             {
+                for (int x = x_from; x <= x_end; ++x)
+                {
+                    if (i_partXW(y_gradient) >= 0 && i_partXW(y_gradient) < bitmap.Height)
+                    {
+                        int alpha = (int)Math.Round(rf_partXW(y_gradient) * 255);
+                        if (alpha < 0)
+                            alpha = 0;
+                        else if (alpha > 255)
+                            alpha = 255;
+
+                        bitmap.SetPixel(x, i_partXW(y_gradient),
+                            Color.FromArgb(alpha, color));
+                    }
+                    if (i_partXW(y_gradient) >= 1 && i_partXW(y_gradient) < bitmap.Height)
+                    {
+                        int alpha = (int)Math.Round(f_partXW(y_gradient) * 255);
+                        if (alpha < 0)
+                            alpha = 0;
+                        else if (alpha > 255)
+                            alpha = 255;
+
+                        bitmap.SetPixel(x, i_partXW(y_gradient) - 1,
+                            Color.FromArgb(alpha, color));
+                    }
+                    y_gradient += gradient;
+                }
             }
         }
 
         private int i_partXW(float x)
         {
             return (int)Math.Floor(x);
-        }
-
-        private int roundXW(float x)
-        {
-            return i_partXW(x + (float)0.5);
         }
 
         private float f_partXW(float x)

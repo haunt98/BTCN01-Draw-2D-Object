@@ -48,6 +48,7 @@ namespace Draw2D
             }
             else if (comboBox_algo.Text.Equals("Xiaolin Wu"))
             {
+                drawLine.XiaolinWu(line, Color.Blue);
             }
 
             // refresh picture box every draw
@@ -220,6 +221,12 @@ namespace Draw2D
             }
             else if (comboBox_algo.Text.Equals("Xiaolin Wu"))
             {
+                stopwatch.Restart();
+                for (int i = 0; i < numRand; ++i)
+                {
+                    drawLine2D.XiaolinWu(lineS[i], Color.Blue);
+                }
+                stopwatch.Stop();
             }
 
             // set running time to text box
