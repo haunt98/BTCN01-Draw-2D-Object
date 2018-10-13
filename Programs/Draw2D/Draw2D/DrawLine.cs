@@ -290,127 +290,93 @@ namespace Draw2D
 
         // Use the idea from the code in following links
         // https://en.wikipedia.org/wiki/Xiaolin_Wu%27s_line_algorithm
-        // https://www.geeksforgeeks.org/anti-aliased-line-xiaolin-wus-algorithm/
         // https://rosettacode.org/wiki/Xiaolin_Wu%27s_line_algorithm#C.23
         public void XiaolinWu(Line line2D, Color color)
         {
             Point p1 = line2D.p1;
             Point p2 = line2D.p2;
 
-            Boolean isDyLargeThanDx = Math.Abs(p2.Y - p1.Y) > Math.Abs(p2.X - p1.X);
-
-            // make a copy for changing x, y cordinate
-            Point p1_copy = new Point(p1.X, p1.Y);
-            Point p2_copy = new Point(p2.X, p2.Y);
-
-            // check if slope m > 1
-            // or need to draw from p2 to p1
-            if (isDyLargeThanDx)
+            if (line2D.isPoint())
             {
-                // x <--> y
-                int temp = p1_copy.X;
-                p1_copy.X = p1_copy.Y;
-                p1_copy.Y = temp;
-                temp = p2_copy.X;
-                p2_copy.X = p2_copy.Y;
-                p2_copy.Y = temp;
-            }
-            if (p1_copy.X > p2_copy.X)
-            {
-                // p1 <--> p2
-                int temp = p1_copy.X;
-                p1_copy.X = p2_copy.X;
-                p2_copy.X = temp;
-                temp = p1_copy.Y;
-                p1_copy.Y = p2_copy.Y;
-                p2_copy.Y = temp;
+                bitmap.SetPixel(p1.X, p1.Y, color);
+                return;
             }
 
-            int Dx = p2_copy.X - p1_copy.X;
-            int Dy = p2_copy.Y - p1_copy.Y;
+            int Dx = p2.X - p1.X;
+            int Dy = p2.Y - p1.Y;
+            int x_incre, y_incre;
+            float gradient;
 
-            // to change the brightness for antialias
-            float gradient = Dx == 0 ? 1 : (float)Dy / Dx;
+            // if Dy, Dx is negative -> change step in each increment to -1
+            y_incre = Dy < 0 ? -1 : 1;
+            x_incre = Dx < 0 ? -1 : 1;
 
-            int x_from = p1_copy.X;
-            int x_end = p2_copy.X;
-            float y_gradient = p1_copy.Y;
-
-            if (isDyLargeThanDx)
+            // x incre faster than y incre
+            if (Math.Abs(Dx) > Math.Abs(Dy))
             {
-                for (int x = x_from; x <= x_end; ++x)
+                gradient = Math.Abs(Dy) / (float)Math.Abs(Dx) * y_incre;
+
+                int x_draw = p1.X;
+                float float_y = p1.Y;
+
+                while (x_draw != p2.X)
                 {
-                    if (i_partXW(y_gradient) >= 0 && i_partXW(y_gradient) < bitmap.Width &&
-                        x >= 0 && x < bitmap.Height)
-                    {
-                        int alpha = (int)Math.Round(rf_partXW(y_gradient) * 255);
-                        if (alpha < 0)
-                            alpha = 0;
-                        else if (alpha > 255)
-                            alpha = 255;
+                    float f_part_y = float_y - (float)Math.Floor(float_y);
+                    float rf_part_y = 1 - f_part_y;
 
-                        bitmap.SetPixel(i_partXW(y_gradient), x,
+                    int y_draw = (int)Math.Floor(float_y);
+                    if (y_draw >= 0 && y_draw < bitmap.Height)
+                    {
+                        int alpha = (int)Math.Round(rf_part_y * 255);
+
+                        bitmap.SetPixel(x_draw, y_draw,
                             Color.FromArgb(alpha, color));
                     }
-                    if (i_partXW(y_gradient) >= 1 && i_partXW(y_gradient) < bitmap.Width &&
-                        x >= 0 && x < bitmap.Height)
+                    if (y_draw + y_incre >= 0 && y_draw + y_incre < bitmap.Height)
                     {
-                        int alpha = (int)Math.Round(f_partXW(y_gradient) * 255);
-                        if (alpha < 0)
-                            alpha = 0;
-                        else if (alpha > 255)
-                            alpha = 255;
+                        int alpha = (int)Math.Round(f_part_y * 255);
 
-                        bitmap.SetPixel(i_partXW(y_gradient) - 1, x,
+                        bitmap.SetPixel(x_draw, y_draw + y_incre,
                             Color.FromArgb(alpha, color));
                     }
-                    y_gradient += gradient;
+
+                    x_draw += x_incre;
+                    float_y += gradient;
                 }
             }
+            // y incre faster than x incre
             else
             {
-                for (int x = x_from; x <= x_end; ++x)
+                gradient = Math.Abs(Dx) / (float)Math.Abs(Dy) * x_incre;
+
+                int y_draw = p1.Y;
+                float float_x = p1.X;
+
+                while (y_draw != p2.Y)
                 {
-                    if (i_partXW(y_gradient) >= 0 && i_partXW(y_gradient) < bitmap.Height)
-                    {
-                        int alpha = (int)Math.Round(rf_partXW(y_gradient) * 255);
-                        if (alpha < 0)
-                            alpha = 0;
-                        else if (alpha > 255)
-                            alpha = 255;
+                    float f_part_x = float_x - (float)Math.Floor(float_x);
+                    float rf_part_x = 1 - f_part_x;
 
-                        bitmap.SetPixel(x, i_partXW(y_gradient),
+                    int x_draw = (int)Math.Floor(float_x);
+                    if (x_draw >= 0 && x_draw < bitmap.Width)
+                    {
+                        int alpha = (int)Math.Round(rf_part_x * 255);
+
+                        bitmap.SetPixel(x_draw, y_draw,
                             Color.FromArgb(alpha, color));
                     }
-                    if (i_partXW(y_gradient) >= 1 && i_partXW(y_gradient) < bitmap.Height)
+                    if (x_draw + x_incre >= 0 && x_draw + x_incre < bitmap.Width)
                     {
-                        int alpha = (int)Math.Round(f_partXW(y_gradient) * 255);
-                        if (alpha < 0)
-                            alpha = 0;
-                        else if (alpha > 255)
-                            alpha = 255;
+                        int alpha = (int)Math.Round(f_part_x * 255);
 
-                        bitmap.SetPixel(x, i_partXW(y_gradient) - 1,
+                        bitmap.SetPixel(x_draw + x_incre, y_draw,
                             Color.FromArgb(alpha, color));
                     }
-                    y_gradient += gradient;
+
+                    y_draw += y_incre;
+                    float_x += gradient;
                 }
             }
-        }
-
-        private int i_partXW(float x)
-        {
-            return (int)Math.Floor(x);
-        }
-
-        private float f_partXW(float x)
-        {
-            return x - (float)Math.Floor(x);
-        }
-
-        private float rf_partXW(float x)
-        {
-            return 1 - f_partXW(x);
         }
     }
 }

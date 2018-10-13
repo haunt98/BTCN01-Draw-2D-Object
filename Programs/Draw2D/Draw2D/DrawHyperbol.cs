@@ -223,7 +223,7 @@ namespace Draw2D
             //      p_(i+1) = p_i - 8a^2 * y_(k+1) - 4a^2
             // start from Point(a, 0)
             // p_0 = 4ab^2 + b^2 - 4a
-
+            //
             // x increase faster than y increase
             // F(x + 1, y + 1/2) = (x + 1)^2/a^2 - (y + 1/2)^2/b^2 - 1
             // p_i = 4(a^2)(b^2) * F(x + 1, y + 1/2)
