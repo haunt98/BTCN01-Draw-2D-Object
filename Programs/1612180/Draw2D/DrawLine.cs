@@ -237,7 +237,7 @@ namespace Draw2D
             // p_i < 0, line in half below mid point
             // p_i > 0, line in half above mid point
             //
-            // p_(i+1) = p_i = 2Dy - 2Dx * (y_(i+1) - y_i)
+            // p_(i+1) = p_i + 2Dy - 2Dx * (y_(i+1) - y_i)
             // p_0 = 2Dy - Dx
             // same as Bresenham
 

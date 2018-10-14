@@ -37,7 +37,7 @@ namespace Draw2D
             // => dy/dx - 2(a/b)x = 0
             // slope dy/dx = 2(a/b)x
             //
-            // with a > 0
+            // with a/b > 0
             // x incre faster than y incre <=> dy/dx < 1
             // <=> 2(a/b)x < 1
             // y incre faster than x incre <=> dy/dx > 1

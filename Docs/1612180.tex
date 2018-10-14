@@ -6,6 +6,9 @@
 
 \usepackage{url}
 
+% make table inside section
+\usepackage{float}
+
 \title{BÁO CÁO BTCN-01: VẼ CÁC ĐỐI TƯỢNG ĐỒ HỌA 2D}
 \author{Nguyễn Trần Hậu - MSSV 1612180}
 \date{Tháng 10, 2018}
@@ -188,6 +191,7 @@ Với \(p_i < 0\), \(x_{i+1} = x_i - 1\)
 \[p_{i+1} = p_i + 4a^2 y_{x+1} + 2a^2 - 4b^2 x_{i+1}\]
 
 Thuật toán vẽ ở một đoạn chọn \(x\) hay \(y\) tăng liên tục,
+tùy theo giá trị nào tăng nhanh hơn,
 sau đó dùng \(p_i\) để xác định điểm còn lại.
 
 \subsubsection{MidPoint}
@@ -215,6 +219,7 @@ Với \(p_i >= 0\), \(x_{i+1} = x_i - 1\)
 \[p_{i+1} = p_i + 8a^2 y_{i+1} + 4a^2 - 8b^2 x_{i+1}\]
 
 Thuật toán vẽ ở một đoạn chọn \(x\) hay \(y\) tăng liên tục,
+tùy theo giá trị nào tăng nhanh hơn,
 sau đó dùng \(p_i\) để xác định điểm còn lại.
 
 \subsection{Parabol}
@@ -264,6 +269,7 @@ Với \(p_i >= 0\), thì \(x_{i+1} = x_i + 1\)
 \[p_(i+1) = p_i + 2b - 4a x_{i+1}\]
 
 Thuật toán vẽ ở một đoạn chọn \(x\) hay \(y\) tăng liên tục,
+tùy theo giá trị nào tăng nhanh hơn,
 sau đó dùng \(p_i\) để xác định điểm còn lại.
 
 \subsubsection{MidPoint}
@@ -290,6 +296,7 @@ Với \(p_i >= 0\), thì \(x_{i+1} = x_i + 1\)
 \[p_{i+1} = p_i + 4b - 8a x_{i+1} - 8a\]
 
 Thuật toán vẽ ở một đoạn chọn \(x\) hay \(y\) tăng liên tục,
+tùy theo giá trị nào tăng nhanh hơn,
 sau đó dùng \(p_i\) để xác định điểm còn lại.
 
 \subsection{Hyperbol}
@@ -337,6 +344,7 @@ Với \(p_i >= -a^2/2\), thì \(y_{i+1} = y_i + 1\)
 \[p_{i+1} = p_i + 4b^2 x_{i+1} + 2b^2 - 4a^2 y_{i+1}\]
 
 Thuật toán vẽ ở một đoạn chọn \(x\) hay \(y\) tăng liên tục,
+tùy theo giá trị nào tăng nhanh hơn,
 sau đó dùng \(p_i\) để xác định điểm còn lại.
 
 \subsubsection{MidPoint}
@@ -360,14 +368,80 @@ Với \(p_i < 0\), \(y_{i+1} = y_i\)
 \[p_{i+1} = p_i + 8b^2 x_{i+1} + 4b^2\]
 
 Với \(p_i >= 0\), \(y_{i+1} = y_i\)
-\[p_(i+1) = p_i + 8b^2 * x_(k+1) + 4b^2 - 8a^2 y_(k+1)\]
+\[p_(i+1) = p_i + 8b^2 x_(k+1) + 4b^2 - 8a^2 y_(k+1)\]
 
 Thuật toán vẽ ở một đoạn chọn \(x\) hay \(y\) tăng liên tục,
+tùy theo giá trị nào tăng nhanh hơn,
 sau đó dùng \(p_i\) để xác định điểm còn lại.
 
 \section{Đánh giá}
+So sánh thời gian vẽ đường thẳng, đường tròn, elip, parabol, hyperbol
+khi vẽ một cùng bộ random các đối tượng.
 
+\begin{table}[H]
+\begin{tabular}{| c || c | c | c | c |}
+\hline
+& DDA & Bresenham & MidPoint & Xiaolin Wu \\
+\hline \hline
+Đường thẳng & 192ms & 194ms & 195ms & 469ms \\
+\hline
+Đường tròn & 124ms & 127ms & 126ms & X \\
+\hline
+Elip & 335ms & 329ms & 335ms & X \\
+\hline
+Parabol & 295ms & 295ms & 296ms & X \\
+\hline
+Hyperbol & 657ms & 660ms & 652ms & X \\
+\hline
+\end{tabular}
+\caption{Vẽ 1000 đối tượng}
+\end{table}
 
+\begin{table}[H]
+\begin{tabular}{| c || c | c | c | c |}
+\hline
+& DDA & Bresenham & MidPoint & Xiaolin Wu \\
+\hline \hline
+Đường thẳng & 965ms & 963ms & 964ms & 2333ms \\
+\hline
+Đường tròn & 643ms & 654ms & 657ms & X \\
+\hline
+Elip & 1664ms & 1634ms & 1649ms & X \\
+\hline
+Parabol & 1422ms & 1421ms & 1416 & X \\
+\hline
+Hyperbol & 3275ms & 3273ms & 3463ms & X \\
+\hline
+\end{tabular}
+\caption{Vẽ 5000 đối tượng}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{| c || c | c | c | c |}
+\hline
+& DDA & Bresenham & MidPoint & Xiaolin Wu \\
+\hline \hline
+Đường thẳng & 1933ms & 1933ms & 1945ms & 4829ms \\
+\hline
+Đường tròn & 1287ms & 1314ms & 1312ms & X \\
+\hline
+Elip & 3643ms & 3292ms & 3316ms & X \\
+\hline
+Parabol & 2878ms & 3089ms & 2884ms & X \\
+\hline
+Hyperbol & 6798ms & 6646ms & 6643ms & X \\
+\hline
+\end{tabular}
+\caption{Vẽ 10000 đối tượng}
+\end{table}
+
+\emph{Nhận xét:}
+\begin{itemize}
+\item Về thời gian: Ở vẽ đường thẳng, thuật toán Xiaolin Wu cho thời gian chạy lâu hơn những thuật toán khác.
+Thuật toán DDA, Bresenham, MidPoint cho thời gian chạy chênh lệch từ 1ms đến 20ms.
+\item Về độ chính xác: Trong quá trình test, kết quả vẽ được từ thuật toán DDA, Bresenham, MidPoint tương đối giống nhau qua mắt thường.
+Còn thuật toán Xiaolin Wu vẽ đường thẳng cho kết quả mịn hơn là 3 thuật toán còn lại.
+\end{itemize}
 
 \begin{thebibliography}{1}
 \bibitem{bresenham_circle}A Fast Bresenham Type Algorithm For Drawing Circles \\
